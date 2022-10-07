@@ -6,8 +6,8 @@ data class Repositorio (
 
     val nomeRepositorio: String,
     val descricaoRepositorio: String,
-    val nomeAutor: BigDecimal,
-    val imagemAutor: String? = null,
+    val nomeAutor: String,
+    val fotoAutor: String? = null,
     val numeroStars: Int,
     val numeroForks: Int,
     )

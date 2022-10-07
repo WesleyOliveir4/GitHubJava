@@ -11,69 +11,118 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
         android:layout_margin="8dp">
 
-<!--        <TextView-->
-<!--            android:id="@+id/nomeRecyclerView"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_margin="16dp"-->
-<!--            android:textSize="20sp"-->
-<!--            android:textStyle="bold"-->
-<!--            android:maxLines="1"-->
-<!--            android:ellipsize="end"-->
-<!--            android:fontFamily="@font/montserrat_alternates_bold"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toEndOf="@+id/imageView"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            tools:text="Salada de frutas" />-->
+        <TextView
+            android:id="@+id/nomeRepositorioRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/fotoAutorImageView"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Nome do repositório" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/descricaoRecyclerView"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginEnd="16dp"-->
-<!--            android:fontFamily="@font/montserrat_alternates"-->
-<!--            android:textSize="14sp"-->
-<!--            android:maxLines="1"-->
-<!--            android:ellipsize="end"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintHorizontal_bias="0.0"-->
-<!--            app:layout_constraintStart_toStartOf="@+id/nomeRecyclerView"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/nomeRecyclerView"-->
-<!--            tools:text="Laranja, manga e uva" />-->
+        <TextView
+            android:id="@+id/descricaoRepositorioRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:textSize="16sp"
+            android:maxLines="2"
+            android:ellipsize="end"
+            app:layout_constraintEnd_toStartOf="@id/fotoAutorImageView"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/nomeRepositorioRecyclerView"
+            app:layout_constraintTop_toBottomOf="@id/nomeRepositorioRecyclerView"
+            app:layout_constraintBottom_toTopOf="@id/forksImageView"
+            tools:text="Descrição do repositorio" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/valorRecyclerView"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginEnd="16dp"-->
-<!--            android:textSize="18sp"-->
-<!--            android:layout_marginTop="8dp"-->
-<!--            android:textStyle="bold"-->
-<!--            android:maxLines="1"-->
-<!--            android:ellipsize="end"-->
-<!--            android:fontFamily="@font/montserrat_alternates"-->
-<!--            android:textColor="@android:color/holo_green_dark"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="@+id/nomeRecyclerView"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/descricaoRecyclerView"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            android:layout_marginBottom="16dp"-->
-<!--            tools:text="19.99" />-->
+        <TextView
+            android:id="@+id/nomeAutorRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="-16dp"
+            android:textSize="18sp"
+            android:layout_marginTop="8dp"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/fotoAutorImageView"
+            app:layout_constraintTop_toBottomOf="@id/fotoAutorImageView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="16dp"
+            tools:text="Nome do Autor" />
 
         <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:id="@+id/fotoAutorImageView"
+            android:layout_width="76dp"
+            android:layout_height="65dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="36dp"
             android:scaleType="centerCrop"
-            app:layout_constraintWidth_percent="0.3"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/nomeRecyclerView"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.08"
+            app:layout_constraintWidth_percent="0.3"
+            tools:srcCompat="@drawable/avatar_icon"/>
+
+        <ImageView
+            android:id="@+id/forksImageView"
+            android:layout_width="35dp"
+            android:layout_height="40dp"
+            app:srcCompat="@drawable/git_branch_icon"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintStart_toStartOf="@+id/nomeRepositorioRecyclerView"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/numeroForksRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/holo_orange_dark"
+            app:layout_constraintStart_toEndOf="@+id/forksImageView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="20dp"
+            tools:text="100" />
+
+        <ImageView
+            android:id="@+id/starsImageView"
+            android:layout_width="35dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="14dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toEndOf="@+id/numeroForksRecyclerView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/forksImageView"
+            app:srcCompat="@drawable/ic_stars" />
+
+        <TextView
+            android:id="@+id/numeroStarsRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="20dp"
+            android:textStyle="bold"
+            android:textColor="@android:color/holo_orange_dark"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/starsImageView"
+            app:layout_constraintTop_toTopOf="@+id/numeroForksRecyclerView"
+            app:layout_constraintVertical_bias="0.0"
+            tools:text="100" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
