@@ -8,6 +8,6 @@ data class Repositorio (
     val descricaoRepositorio: String,
     val nomeAutor: String,
     val fotoAutor: String? = null,
-    val numeroStars: Int,
-    val numeroForks: Int,
+    val numeroStars: String,
+    val numeroForks: String,
     )
