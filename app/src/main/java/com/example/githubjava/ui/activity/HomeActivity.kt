@@ -35,9 +35,7 @@ class HomeActivity : AppCompatActivity() {
 
         setContentView(binding.root)
         configuraRecyclerView()
-        buscandoRepositorios()
-
-
+        consultaApiGit()
     }
 
     private fun configuraRecyclerView() {
@@ -47,94 +45,54 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        consultaApiGit()
+    }
 
-
+    fun consultaApiGit(){
+        dao.buscandoRepositorios(1)
         adapter.atualiza(dao.buscaTodos())
+        onRestart()
     }
 
-    fun buscandoRepositorios() {
-        val retrofitClient = NetworkUtils.getRetrofitInstance("https://api.github.com/search/")
-        val endpoint = retrofitClient.create(EndpointRepositorios::class.java)
-        val page = "page=1"
-        endpoint.getCurrencies("$page").enqueue(object : Callback<JsonObject> {
-            override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
-                var data = mutableListOf<String>()
-                var i: Int = 1
-
-                val objeto = response.body()?.get("items")
-                try {
-                    objeto?.asJsonArray?.forEach {
-                        val getOwners = objeto?.asJsonArray?.get(i)
-                        val getOwner = getOwners?.asJsonObject?.get("owner")
-                        getOwner?.asJsonObject?.get("login")
-                        addRepositorioNovo(
-                            getOwner?.asJsonObject?.get("login").toString(),
-                            getOwner?.asJsonObject?.get("login").toString(),
-                            getOwner?.asJsonObject?.get("login").toString(),
-                            getOwner?.asJsonObject?.get("login").toString(),
-                            getOwner?.asJsonObject?.get("login").toString()
-                        )
-                        Log.d(
-                            "Teste deu certo owner",
-                            getOwner?.asJsonObject?.get("description").toString()
-                        )
-                        i++
-                    }
-                } catch (e: Exception) {
-                    Log.d("chegou ao limite", i.toString())
-                }
-
-//                        try {
-//                            val getOwner = getItem?.asJsonObject?.get("owner")
-//                            Log.d("Teste deu certo owner",getItem.toString())
-//                            val getItems = objeto?.asJsonArray?.get(i)
-//                            val findName = getItems?.asJsonObject?.entrySet()?.find { it.key == "login" }
-//                            val findName = getItens?.asJsonObject?.entrySet()?.find { it.key == "full_name" }
-//                            val findName = getItens?.asJsonObject?.entrySet()?.find { it.key == "full_name" }
-//                            val findName = getItens?.asJsonObject?.entrySet()?.find { it.key == "full_name" }
-
-//                            Log.d("Teste deu certo",findName.toString())
-//                            i++
-//                        }catch (e: Exception){
-//                            Log.d("chegou ao limite",i.toString())
-//                        }
-
-
-//                        val find = get?.asJsonObject?.entrySet()?.find { it.key == "full_name" }
-
-
-//                response.body()?.keySet()?.iterator()?.forEach {
-//                    data.add(it)
-//                    println(data.count())
-
+//    fun buscandoRepositorios() {
+//        val retrofitClient = NetworkUtils.getRetrofitInstance("https://api.github.com/search/")
+//        val endpoint = retrofitClient.create(EndpointRepositorios::class.java)
+//        val page = "page=2"
+//        endpoint.getCurrencies("$page").enqueue(object : Callback<JsonObject> {
+//            override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+//                var i: Int = 1
+//
+//                val objeto = response.body()?.get("items")
+//                try {
+//                    objeto?.asJsonArray?.forEach {
+//                        val getOwners = objeto?.asJsonArray?.get(i)
+//                        val getOwner = getOwners?.asJsonObject?.get("owner")
+//                        val getItems = objeto?.asJsonArray?.get(i)
+//                        getItems?.asJsonObject?.get("name")
+//
+//
+//                        addRepositorioNovo(
+//                            getItems?.asJsonObject?.get("name").toString(),
+//                            getItems?.asJsonObject?.get("description").toString(),
+//                            getOwner?.asJsonObject?.get("login").toString(),
+//                            getItems?.asJsonObject?.get("stargazers_count").toString(),
+//                            getItems?.asJsonObject?.get("forks").toString()
+//                        )
+////                        Log.d(
+////                            "Teste deu certo owner",
+////                            getItems.toString()
+////                        )
+//                        i++
+//                    }
+//                } catch (e: Exception) {
+//                    Log.d("chegou ao limite", i.toString())
 //                }
-            }
-
-            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                Log.d("Teste deu errado", "onFailure")
-            }
-
-        })
+//            }
+//
+//            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+//                Log.d("Teste deu errado", "onFailure")
+//            }
+//
+//        })
 
     }
-
-    fun addRepositorioNovo(
-        nomeRepositorio: String,
-        descricaoRepositorio: String,
-        nomeAutor: String,
-        numeroStars: String,
-        numeroForks: String
-    ) {
-
-        val repositoroNovo = Repositorio(
-            nomeRepositorio = nomeRepositorio,
-            descricaoRepositorio = descricaoRepositorio,
-            nomeAutor = nomeAutor,
-            numeroStars = numeroStars,
-            numeroForks = numeroForks
-        )
-        dao.adiciona(repositoroNovo)
-    }
-
-
-}

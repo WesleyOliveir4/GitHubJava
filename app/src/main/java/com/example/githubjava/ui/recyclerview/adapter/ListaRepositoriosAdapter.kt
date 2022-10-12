@@ -49,7 +49,7 @@ class ListaRepositoriosAdapter(
 
     override fun getItemCount(): Int = repositorios.size
     fun atualiza(repositorios: List<Repositorio>) {
-//        this.produtos.clear()
+        this.repositorios.clear()
         this.repositorios.addAll(repositorios)
         notifyDataSetChanged()
     }
