@@ -1,6 +1,5 @@
 package com.example.githubjava.ui.activity
 
-import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,14 +9,12 @@ import com.example.githubjava.dao.RepositorioDao
 import com.example.githubjava.databinding.ActivityHomeBinding
 import com.example.githubjava.model.Repositorio
 import com.example.githubjava.ui.recyclerview.adapter.ListaRepositoriosAdapter
-import com.google.gson.Gson
-import com.google.gson.JsonArray
-import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.create
+import retrofit2.http.Url
 
 
 class HomeActivity : AppCompatActivity() {
@@ -45,54 +42,86 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+
         consultaApiGit()
     }
 
-    fun consultaApiGit(){
-        dao.buscandoRepositorios(1)
+    fun consultaApiGit() {
+        buscandoRepositorios(1)
+    }
+
+    fun buscandoRepositorios(page: Int) {
+        val retrofitClient = NetworkUtils.getRetrofitInstance("https://api.github.com/search/")
+        val endpoint = retrofitClient.create(EndpointRepositorios::class.java)
+        val page = page
+        if (page < 1) {
+            page == 1
+        }
+
+        endpoint.getCurrencies("$page").enqueue(object : Callback<JsonObject> {
+            override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                var i: Int = 1
+
+                val objeto = response.body()?.get("items")
+                try {
+                    objeto?.asJsonArray?.forEach {
+                        val getOwners = objeto?.asJsonArray?.get(i)
+                        val getOwner = getOwners?.asJsonObject?.get("owner")
+                        val getItems = objeto?.asJsonArray?.get(i)
+                        getItems?.asJsonObject?.get("name")
+
+                        addRepositorioNovo(
+                            nomeRepositorio = formataString(getItems?.asJsonObject?.get("name").toString()),
+                            descricaoRepositorio = formataString(getItems?.asJsonObject?.get("description").toString()),
+                            nomeAutor = formataString(getOwner?.asJsonObject?.get("login").toString()),
+                            fotoAutor = formataString(getOwner?.asJsonObject?.get("avatar_url").toString()),
+                            numeroStars = formataString(getItems?.asJsonObject?.get("stargazers_count").toString()),
+                            numeroForks = formataString(getItems?.asJsonObject?.get("forks").toString())
+                        )
+                        if (i == 29) {
+                            return
+                        }
+                        i++
+
+                    }
+                } catch (e: Exception) {
+                    Log.d("chegou ao limite", i.toString())
+                }
+            }
+
+            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                Log.d("Teste deu errado", "onFailure")
+            }
+
+        })
+
+
+    }
+
+    fun addRepositorioNovo(
+        nomeRepositorio: String,
+        descricaoRepositorio: String,
+        nomeAutor: String,
+        fotoAutor: String,
+        numeroStars: String,
+        numeroForks: String
+    ) {
+
+        val repositoroNovo = Repositorio(
+            nomeRepositorio = nomeRepositorio,
+            descricaoRepositorio = descricaoRepositorio,
+            nomeAutor = nomeAutor,
+            fotoAutor = fotoAutor,
+            numeroStars = numeroStars,
+            numeroForks = numeroForks
+        )
         adapter.atualiza(dao.buscaTodos())
-        onRestart()
+        dao.adiciona(repositoroNovo)
+        adapter.atualiza(dao.buscaTodos())
+    }
+    fun formataString(text:String):String{
+       var textModified = text.substring(1, text.length -1)
+        return textModified
     }
 
-//    fun buscandoRepositorios() {
-//        val retrofitClient = NetworkUtils.getRetrofitInstance("https://api.github.com/search/")
-//        val endpoint = retrofitClient.create(EndpointRepositorios::class.java)
-//        val page = "page=2"
-//        endpoint.getCurrencies("$page").enqueue(object : Callback<JsonObject> {
-//            override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
-//                var i: Int = 1
-//
-//                val objeto = response.body()?.get("items")
-//                try {
-//                    objeto?.asJsonArray?.forEach {
-//                        val getOwners = objeto?.asJsonArray?.get(i)
-//                        val getOwner = getOwners?.asJsonObject?.get("owner")
-//                        val getItems = objeto?.asJsonArray?.get(i)
-//                        getItems?.asJsonObject?.get("name")
-//
-//
-//                        addRepositorioNovo(
-//                            getItems?.asJsonObject?.get("name").toString(),
-//                            getItems?.asJsonObject?.get("description").toString(),
-//                            getOwner?.asJsonObject?.get("login").toString(),
-//                            getItems?.asJsonObject?.get("stargazers_count").toString(),
-//                            getItems?.asJsonObject?.get("forks").toString()
-//                        )
-////                        Log.d(
-////                            "Teste deu certo owner",
-////                            getItems.toString()
-////                        )
-//                        i++
-//                    }
-//                } catch (e: Exception) {
-//                    Log.d("chegou ao limite", i.toString())
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-//                Log.d("Teste deu errado", "onFailure")
-//            }
-//
-//        })
-
-    }
+}

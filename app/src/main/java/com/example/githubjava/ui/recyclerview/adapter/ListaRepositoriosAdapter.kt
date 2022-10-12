@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.githubjava.databinding.RepositorioItemBinding
+import com.example.githubjava.extensoes.CarregaImagem
 import com.example.githubjava.model.Repositorio
 import java.util.*
 
@@ -24,14 +25,12 @@ class ListaRepositoriosAdapter(
             descricaoRepositorioTextView.text = repositorio.descricaoRepositorio
             val nomeAutorTextView = binding.nomeAutorRecyclerView
             nomeAutorTextView.text = repositorio.nomeAutor
-            val fotoAutorImageView = binding.fotoAutorImageView
-//            fotoAutorImageView. = repositorio.fotoAutor
+            binding.fotoAutorImageView.CarregaImagem(repositorio.fotoAutor)
             val numeroStarsTextView = binding.numeroStarsRecyclerView
             numeroStarsTextView.text = repositorio.numeroStars
             val numeroForksTextView = binding.numeroForksRecyclerView
             numeroForksTextView.text = repositorio.numeroForks
 
-//            binding.fotoAutorImageView.CarregaImagem(repositorio.fotoAutor)
         }
 
     }
@@ -53,6 +52,7 @@ class ListaRepositoriosAdapter(
         this.repositorios.addAll(repositorios)
         notifyDataSetChanged()
     }
+
 
 
 }
