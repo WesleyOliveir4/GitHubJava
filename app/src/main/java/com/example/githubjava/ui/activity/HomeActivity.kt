@@ -118,12 +118,12 @@ class HomeActivity : AppCompatActivity() {
 
                     }
                 } catch (e: Exception) {
-                    Log.d("chegou ao limite", i.toString())
+                    Log.d("Erro ao pesquisar repo", i.toString() + e.toString())
                 }
             }
 
             override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                Log.d("Teste deu errado", "onFailure")
+
             }
 
         })
