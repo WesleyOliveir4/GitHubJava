@@ -1,6 +1,7 @@
 package com.example.githubjava.ui.recyclerview.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -48,9 +49,10 @@ class ListaRepositoriosAdapter(
 
     override fun getItemCount(): Int = repositorios.size
     fun atualiza(repositorios: List<Repositorio>) {
+        notifyDataSetChanged()
         this.repositorios.clear()
         this.repositorios.addAll(repositorios)
-        notifyDataSetChanged()
+
     }
 
 
