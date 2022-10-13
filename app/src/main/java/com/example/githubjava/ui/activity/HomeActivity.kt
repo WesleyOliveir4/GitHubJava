@@ -25,8 +25,8 @@ class HomeActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityHomeBinding.inflate(layoutInflater)
     }
-    private val dao = RepositorioDao()
-    private val adapter = ListaRepositoriosAdapter(context = this, repositorios = dao.buscaTodos())
+    private var dao = RepositorioDao()
+    private var adapter = ListaRepositoriosAdapter(context = this, repositorios = dao.buscaTodos())
     private var paginaAtual:Int = 1
     ///
 
@@ -36,11 +36,12 @@ class HomeActivity : AppCompatActivity() {
 
         setContentView(binding.root)
         configuraRecyclerView()
+        configuraPaginacao()
         consultaApiGit()
     }
 
     private fun configuraRecyclerView() {
-        val recyclerView = binding.recyclerView
+        var recyclerView = binding.recyclerView
         recyclerView.adapter = adapter
     }
 
@@ -54,6 +55,8 @@ class HomeActivity : AppCompatActivity() {
             if(paginaAtual>1){
                 paginaAtual -= 1
                 tvNumeroPagina.text = paginaAtual.toString()
+                buscandoRepositorios(paginaAtual)
+                dao.removeTodos()
                 adapter.atualiza(dao.buscaTodos())
             }else{
                 return@OnClickListener
@@ -63,6 +66,8 @@ class HomeActivity : AppCompatActivity() {
         btnSeguinte.setOnClickListener(View.OnClickListener {
             paginaAtual += 1
             tvNumeroPagina.text = paginaAtual.toString()
+            buscandoRepositorios(paginaAtual)
+            dao.removeTodos()
             adapter.atualiza(dao.buscaTodos())
         })
     }
@@ -126,7 +131,7 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
-    @SuppressLint("NotifyDataSetChanged")
+
     fun addRepositorioNovo(
         nomeRepositorio: String,
         descricaoRepositorio: String,

@@ -15,7 +15,7 @@ class ListaRepositoriosAdapter(
     repositorios: List<Repositorio>
 ): RecyclerView.Adapter<ListaRepositoriosAdapter.ViewHolder>() {
 
-   companion object private val repositorios = repositorios.toMutableList()
+    private val repositorios = repositorios.toMutableList()
 
     class ViewHolder(private val binding: RepositorioItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -49,6 +49,7 @@ class ListaRepositoriosAdapter(
 
     override fun getItemCount(): Int = repositorios.size
     fun atualiza(repositorios: List<Repositorio>) {
+        notifyDataSetChanged()
         this.repositorios.clear()
         this.repositorios.addAll(repositorios)
 

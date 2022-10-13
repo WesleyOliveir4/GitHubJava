@@ -15,6 +15,7 @@ import retrofit2.Response
 class RepositorioDao {
 
     fun adiciona(repositorio: Repositorio){
+
         repositorios.add(repositorio)
     }
 
@@ -22,8 +23,8 @@ class RepositorioDao {
         return repositorios.toList()
     }
 
-    fun removeTodos(): List<Repositorio>{
-        return repositorios.toList()
+    fun removeTodos(){
+        repositorios.clear()
     }
 
     companion object {
