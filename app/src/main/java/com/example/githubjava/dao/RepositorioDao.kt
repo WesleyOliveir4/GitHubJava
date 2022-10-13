@@ -22,6 +22,10 @@ class RepositorioDao {
         return repositorios.toList()
     }
 
+    fun removeTodos(): List<Repositorio>{
+        return repositorios.toList()
+    }
+
     companion object {
         private val repositorios = mutableListOf<Repositorio>()
     }

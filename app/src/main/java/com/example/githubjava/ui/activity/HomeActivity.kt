@@ -1,8 +1,11 @@
 package com.example.githubjava.ui.activity
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import androidx.core.text.set
 import com.example.githubjava.api.EndpointRepositorios
 import com.example.githubjava.api.network.NetworkUtils
 import com.example.githubjava.dao.RepositorioDao
@@ -24,6 +27,7 @@ class HomeActivity : AppCompatActivity() {
     }
     private val dao = RepositorioDao()
     private val adapter = ListaRepositoriosAdapter(context = this, repositorios = dao.buscaTodos())
+    private var paginaAtual:Int = 1
     ///
 
 
@@ -40,14 +44,38 @@ class HomeActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
     }
 
+    private fun configuraPaginacao(){
+        val btnAnterior = binding.btnAnterior
+        val btnSeguinte = binding.btnSeguinte
+        var tvNumeroPagina = binding.tvNumeroPagina
+        tvNumeroPagina.text = paginaAtual.toString()
+
+        btnAnterior.setOnClickListener(View.OnClickListener {
+            if(paginaAtual>1){
+                paginaAtual -= 1
+                tvNumeroPagina.text = paginaAtual.toString()
+                adapter.atualiza(dao.buscaTodos())
+            }else{
+                return@OnClickListener
+            }
+        })
+
+        btnSeguinte.setOnClickListener(View.OnClickListener {
+            paginaAtual += 1
+            tvNumeroPagina.text = paginaAtual.toString()
+            adapter.atualiza(dao.buscaTodos())
+        })
+    }
+
     override fun onResume() {
         super.onResume()
-
+        configuraRecyclerView()
+        configuraPaginacao()
         consultaApiGit()
     }
 
     fun consultaApiGit() {
-        buscandoRepositorios(1)
+        buscandoRepositorios(paginaAtual)
     }
 
     fun buscandoRepositorios(page: Int) {
@@ -98,6 +126,7 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun addRepositorioNovo(
         nomeRepositorio: String,
         descricaoRepositorio: String,
@@ -115,7 +144,6 @@ class HomeActivity : AppCompatActivity() {
             numeroStars = numeroStars,
             numeroForks = numeroForks
         )
-        adapter.atualiza(dao.buscaTodos())
         dao.adiciona(repositoroNovo)
         adapter.atualiza(dao.buscaTodos())
     }

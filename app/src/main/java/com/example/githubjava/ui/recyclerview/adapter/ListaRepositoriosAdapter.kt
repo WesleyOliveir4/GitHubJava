@@ -1,6 +1,7 @@
 package com.example.githubjava.ui.recyclerview.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +15,7 @@ class ListaRepositoriosAdapter(
     repositorios: List<Repositorio>
 ): RecyclerView.Adapter<ListaRepositoriosAdapter.ViewHolder>() {
 
-    private val repositorios = repositorios.toMutableList()
+   companion object private val repositorios = repositorios.toMutableList()
 
     class ViewHolder(private val binding: RepositorioItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -50,7 +51,7 @@ class ListaRepositoriosAdapter(
     fun atualiza(repositorios: List<Repositorio>) {
         this.repositorios.clear()
         this.repositorios.addAll(repositorios)
-        notifyDataSetChanged()
+
     }
 
 
