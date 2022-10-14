@@ -1,6 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="8dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_margin="8dp">
+
+        <TextView
+            android:id="@+id/tituloPullRequestsRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Titulo do Pull Request" />
+
+        <TextView
+            android:id="@+id/bodyPullRequestRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tituloPullRequestsRecyclerView"
+            app:layout_constraintTop_toBottomOf="@id/tituloPullRequestsRecyclerView"
+            app:layout_constraintBottom_toTopOf="@+id/calendarioImageView"
+            tools:text="Descrição do pull request" />
+
+        <TextView
+            android:id="@+id/nomeAutorRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="4dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/calendarioImageView"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@id/fotoAutorPullImageView"
+            app:layout_constraintTop_toTopOf="@id/fotoAutorPullImageView"
+            app:layout_constraintVertical_bias="0.243"
+            tools:text="Nome do Autor" />
+
+        <ImageView
+            android:id="@+id/fotoAutorPullImageView"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_margin="16dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bodyPullRequestRecyclerView"
+            tools:srcCompat="@drawable/avatar_icon" />
+
+        <ImageView
+            android:id="@+id/calendarioImageView"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="120dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/fotoAutorPullImageView"
+
+            app:layout_constraintStart_toEndOf="@+id/nomeAutorRecyclerView"
+            app:srcCompat="@drawable/ic_calendario" />
+
+                <TextView
+                    android:id="@+id/dataRecyclerView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="16dp"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/holo_orange_dark"
+                    app:layout_constraintTop_toTopOf="@+id/nomeAutorRecyclerView"
+                    app:layout_constraintStart_toEndOf="@+id/calendarioImageView"
+                    app:layout_constraintBottom_toBottomOf="@id/nomeAutorRecyclerView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="25-12-2022" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
