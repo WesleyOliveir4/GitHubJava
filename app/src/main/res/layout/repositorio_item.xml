@@ -37,11 +37,11 @@
             android:textSize="16sp"
             android:maxLines="2"
             android:ellipsize="end"
-            app:layout_constraintEnd_toStartOf="@id/fotoAutorPullImageView"
+            app:layout_constraintEnd_toStartOf="@id/fotoAutorImageView"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/nomeRepositorioRecyclerView"
             app:layout_constraintTop_toBottomOf="@id/nomeRepositorioRecyclerView"
-            app:layout_constraintBottom_toTopOf="@id/calendarioImageView"
+            app:layout_constraintBottom_toTopOf="@id/numeroForksRecyclerView"
             tools:text="Descrição do repositorio" />
 
         <TextView
@@ -56,14 +56,14 @@
             android:maxLines="1"
             android:ellipsize="end"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/fotoAutorPullImageView"
-            app:layout_constraintTop_toBottomOf="@id/fotoAutorPullImageView"
+            app:layout_constraintStart_toStartOf="@+id/fotoAutorImageView"
+            app:layout_constraintTop_toBottomOf="@id/fotoAutorImageView"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="16dp"
             tools:text="Nome do Autor" />
 
         <ImageView
-            android:id="@+id/fotoAutorPullImageView"
+            android:id="@+id/fotoAutorImageView"
             android:layout_width="76dp"
             android:layout_height="65dp"
             android:layout_marginTop="16dp"
@@ -77,7 +77,7 @@
             tools:srcCompat="@drawable/avatar_icon"/>
 
         <ImageView
-            android:id="@+id/calendarioImageView"
+            android:id="@+id/ForksImageView"
             android:layout_width="35dp"
             android:layout_height="40dp"
             app:srcCompat="@drawable/git_branch_icon"
@@ -86,14 +86,14 @@
             app:layout_constraintBottom_toBottomOf="parent"/>
 
         <TextView
-            android:id="@+id/dataRecyclerView"
+            android:id="@+id/numeroForksRecyclerView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@android:color/holo_orange_dark"
-            app:layout_constraintStart_toEndOf="@+id/calendarioImageView"
+            app:layout_constraintStart_toEndOf="@+id/ForksImageView"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="20dp"
             tools:text="10000" />
@@ -104,9 +104,9 @@
             android:layout_height="50dp"
             android:layout_marginBottom="14dp"
             android:layout_marginStart="16dp"
-            app:layout_constraintStart_toEndOf="@+id/dataRecyclerView"
+            app:layout_constraintStart_toEndOf="@+id/numeroForksRecyclerView"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/calendarioImageView"
+            app:layout_constraintTop_toTopOf="@+id/ForksImageView"
             app:srcCompat="@drawable/ic_stars" />
 
         <TextView
@@ -120,7 +120,7 @@
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/starsImageView"
-            app:layout_constraintTop_toTopOf="@+id/dataRecyclerView"
+            app:layout_constraintTop_toTopOf="@+id/numeroForksRecyclerView"
             app:layout_constraintVertical_bias="0.0"
             tools:text="10000" />
 
