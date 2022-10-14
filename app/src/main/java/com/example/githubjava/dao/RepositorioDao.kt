@@ -14,15 +14,15 @@ import retrofit2.Response
 
 class RepositorioDao {
 
-    fun adiciona(repositorio: Repositorio){
+    fun adicionaRepositorio(repositorio: Repositorio){
         repositorios.add(repositorio)
     }
 
-    fun buscaTodos(): List<Repositorio>{
+    fun buscaTodosRepositorios(): List<Repositorio>{
         return repositorios.toList()
     }
 
-    fun removeTodos(){
+    fun removeTodosRepositorios(){
         repositorios.clear()
     }
 

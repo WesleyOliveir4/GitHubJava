@@ -1,6 +1,7 @@
 package com.example.githubjava.ui.activity
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -26,7 +27,7 @@ class HomeActivity : AppCompatActivity() {
         ActivityHomeBinding.inflate(layoutInflater)
     }
     private var dao = RepositorioDao()
-    private var adapter = ListaRepositoriosAdapter(context = this, repositorios = dao.buscaTodos())
+    private var adapter = ListaRepositoriosAdapter(context = this, repositorios = dao.buscaTodosRepositorios())
     private var paginaAtual:Int = 1
     ///
 
@@ -56,8 +57,8 @@ class HomeActivity : AppCompatActivity() {
                 paginaAtual -= 1
                 tvNumeroPagina.text = paginaAtual.toString()
                 consultaApiGit()
-                dao.removeTodos()
-                adapter.atualiza(dao.buscaTodos())
+                dao.removeTodosRepositorios()
+                adapter.atualiza(dao.buscaTodosRepositorios())
             }else{
                 return@OnClickListener
             }
@@ -67,8 +68,9 @@ class HomeActivity : AppCompatActivity() {
             paginaAtual += 1
             tvNumeroPagina.text = paginaAtual.toString()
             consultaApiGit()
-            dao.removeTodos()
-            adapter.atualiza(dao.buscaTodos())
+            dao.removeTodosRepositorios()
+            redirecionaPull()
+            adapter.atualiza(dao.buscaTodosRepositorios())
         })
     }
 
@@ -81,7 +83,7 @@ class HomeActivity : AppCompatActivity() {
 
     fun consultaApiGit() {
         buscandoRepositorios(paginaAtual)
-        adapter.atualiza(dao.buscaTodos())
+        adapter.atualiza(dao.buscaTodosRepositorios())
     }
 
     fun buscandoRepositorios(page: Int) {
@@ -150,12 +152,18 @@ class HomeActivity : AppCompatActivity() {
             numeroStars = numeroStars,
             numeroForks = numeroForks
         )
-        dao.adiciona(repositoroNovo)
-        adapter.atualiza(dao.buscaTodos())
+        dao.adicionaRepositorio(repositoroNovo)
+        adapter.atualiza(dao.buscaTodosRepositorios())
     }
     fun formataString(text:String):String{
        var textModified = text.substring(1, text.length -1)
         return textModified
+    }
+
+
+    private fun redirecionaPull(){
+        val intent = Intent(this,PullRequestActivity::class.java)
+        startActivity(intent)
     }
 
 }
