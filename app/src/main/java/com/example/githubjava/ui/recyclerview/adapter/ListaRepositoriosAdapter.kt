@@ -3,6 +3,7 @@ package com.example.githubjava.ui.recyclerview.adapter
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.githubjava.databinding.RepositorioItemBinding
@@ -12,13 +13,17 @@ import java.util.*
 
 class ListaRepositoriosAdapter(
     private val context: Context,
-    repositorios: List<Repositorio>
+    repositorios: List<Repositorio>,
+    var selecionaRepositorio: SelecionaRepositorio
 ): RecyclerView.Adapter<ListaRepositoriosAdapter.ViewHolder>() {
 
     private val repositorios = repositorios.toMutableList()
+    interface SelecionaRepositorio{
+        fun selecionaRepositorio(repositorio: Repositorio)
+    }
 
     class ViewHolder(private val binding: RepositorioItemBinding) : RecyclerView.ViewHolder(binding.root) {
-
+            val cardView =binding.cardViewRepositorio
         fun vincula(repositorio: Repositorio) {
             val nomeRepositorioTextView = binding.nomeRepositorioRecyclerView
             nomeRepositorioTextView.text = repositorio.nomeRepositorio
@@ -45,6 +50,10 @@ class ListaRepositoriosAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val repositorio = repositorios[position]
         holder.vincula(repositorio)
+
+        holder.cardView.setOnClickListener(View.OnClickListener {
+            selecionaRepositorio.selecionaRepositorio(repositorio)
+        })
     }
 
     override fun getItemCount(): Int = repositorios.size

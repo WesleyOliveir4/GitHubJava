@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.core.text.set
 import com.example.githubjava.api.EndpointRepositorios
 import com.example.githubjava.api.network.NetworkUtils
@@ -21,13 +22,13 @@ import retrofit2.create
 import retrofit2.http.Url
 
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(), ListaRepositoriosAdapter.SelecionaRepositorio {
 
     private val binding by lazy {
         ActivityHomeBinding.inflate(layoutInflater)
     }
     private var dao = RepositorioDao()
-    private var adapter = ListaRepositoriosAdapter(context = this, repositorios = dao.buscaTodosRepositorios())
+    private var adapter = ListaRepositoriosAdapter(context = this, repositorios = dao.buscaTodosRepositorios(), selecionaRepositorio = this)
     private var paginaAtual:Int = 1
     ///
 
@@ -36,9 +37,9 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(binding.root)
-        configuraRecyclerView()
-        configuraPaginacao()
-        consultaApiGit()
+//        configuraRecyclerView()
+//        configuraPaginacao()
+//        consultaApiGit()
     }
 
     private fun configuraRecyclerView() {
@@ -163,6 +164,17 @@ class HomeActivity : AppCompatActivity() {
 
     private fun redirecionaPull(){
         val intent = Intent(this,PullRequestActivity::class.java)
+
+        startActivity(intent)
+    }
+
+    override fun selecionaRepositorio(repositorio: Repositorio) {
+
+        Toast.makeText(this, repositorio.toString(), Toast.LENGTH_SHORT).show()
+        val intent = Intent(this,PullRequestActivity::class.java).apply {
+            putExtra("repositorio.nomeAutor",repositorio.nomeAutor)
+            putExtra("repositorio.nomeRepositorio",repositorio.nomeRepositorio)
+        }
         startActivity(intent)
     }
 
