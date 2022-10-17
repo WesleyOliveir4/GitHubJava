@@ -1,13 +1,11 @@
 package com.example.githubjava.ui.activity
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.core.text.set
 import com.example.githubjava.api.EndpointRepositorios
 import com.example.githubjava.api.network.NetworkUtils
 import com.example.githubjava.dao.RepositorioDao
@@ -18,8 +16,6 @@ import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.create
-import retrofit2.http.Url
 
 
 class HomeActivity : AppCompatActivity(), ListaRepositoriosAdapter.SelecionaRepositorio {
@@ -108,7 +104,7 @@ class HomeActivity : AppCompatActivity(), ListaRepositoriosAdapter.SelecionaRepo
                         getItems?.asJsonObject?.get("name")
 
                         addRepositorioNovo(
-                            nomeRepositorio = formataString(getItems?.asJsonObject?.get("name").toString()),
+                            nomeRepositorio =formataString(getItems?.asJsonObject?.get("name").toString()),
                             descricaoRepositorio = formataString(getItems?.asJsonObject?.get("description").toString()),
                             nomeAutor = formataString(getOwner?.asJsonObject?.get("login").toString()),
                             fotoAutor = formataString(getOwner?.asJsonObject?.get("avatar_url").toString()),

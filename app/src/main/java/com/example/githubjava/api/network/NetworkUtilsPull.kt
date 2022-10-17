@@ -3,14 +3,13 @@ package com.example.githubjava.api.network
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class NetworkUtils {
+class NetworkUtilsPull {
     companion object{
-        fun getRetrofitInstance(path: String): Retrofit {
+        fun getRetrofitPullInstance(pathInit: String,pathFinal: String): Retrofit {
             return Retrofit.Builder()
-                .baseUrl(path)
+                .baseUrl(pathInit)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         }
     }
-
 }
