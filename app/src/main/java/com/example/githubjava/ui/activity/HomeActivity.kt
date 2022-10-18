@@ -1,11 +1,11 @@
 package com.example.githubjava.ui.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
+import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import com.example.githubjava.api.EndpointRepositorios
 import com.example.githubjava.api.network.NetworkUtils
 import com.example.githubjava.dao.RepositorioDao
@@ -26,16 +26,12 @@ class HomeActivity : AppCompatActivity(), ListaRepositoriosAdapter.SelecionaRepo
     private var dao = RepositorioDao()
     private var adapter = ListaRepositoriosAdapter(context = this, repositorios = dao.buscaTodosRepositorios(), selecionaRepositorio = this)
     private var paginaAtual:Int = 1
-    ///
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(binding.root)
-//        configuraRecyclerView()
-//        configuraPaginacao()
-//        consultaApiGit()
     }
 
     private fun configuraRecyclerView() {
@@ -66,13 +62,17 @@ class HomeActivity : AppCompatActivity(), ListaRepositoriosAdapter.SelecionaRepo
             tvNumeroPagina.text = paginaAtual.toString()
             consultaApiGit()
             dao.removeTodosRepositorios()
-            redirecionaPull()
             adapter.atualiza(dao.buscaTodosRepositorios())
         })
     }
 
     override fun onResume() {
         super.onResume()
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
+
         configuraRecyclerView()
         configuraPaginacao()
         consultaApiGit()
@@ -157,16 +157,8 @@ class HomeActivity : AppCompatActivity(), ListaRepositoriosAdapter.SelecionaRepo
         return textModified
     }
 
-
-    private fun redirecionaPull(){
-        val intent = Intent(this,PullRequestActivity::class.java)
-
-        startActivity(intent)
-    }
-
     override fun selecionaRepositorio(repositorio: Repositorio) {
 
-        Toast.makeText(this, repositorio.toString(), Toast.LENGTH_SHORT).show()
         val intent = Intent(this,PullRequestActivity::class.java).apply {
             putExtra("repositorio.nomeAutor",repositorio.nomeAutor)
             putExtra("repositorio.nomeRepositorio",repositorio.nomeRepositorio)

@@ -1,26 +1,19 @@
 package com.example.githubjava.ui.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Parcelable
 import android.util.Log
+import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import com.example.githubjava.api.EndpointPullRequest
-import com.example.githubjava.api.EndpointRepositorios
 import com.example.githubjava.api.network.NetworkUtils
 import com.example.githubjava.dao.PullRequestDao
-import com.example.githubjava.dao.RepositorioDao
-import com.example.githubjava.databinding.ActivityHomeBinding
 import com.example.githubjava.databinding.ActivityPullRequestBinding
 import com.example.githubjava.model.PullRequests
-import com.example.githubjava.model.Repositorio
 import com.example.githubjava.ui.recyclerview.adapter.ListaPullRequestsAdapter
-import com.example.githubjava.ui.recyclerview.adapter.ListaRepositoriosAdapter
 import com.google.gson.JsonArray
-import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.Objects
 
 class PullRequestActivity : AppCompatActivity() {
 
@@ -43,7 +36,13 @@ class PullRequestActivity : AppCompatActivity() {
         super.onResume()
         val nomeCriadorSelecionado = intent?.getStringExtra("repositorio.nomeAutor")
         val nomeRepositorioSelecionado = intent?.getStringExtra("repositorio.nomeRepositorio")
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
 
+        dao.removeTodosPullRequests()
         configuraRecyclerView()
         buscandoRepositorios(nomeCriadorSelecionado.toString(),nomeRepositorioSelecionado.toString())
     }
@@ -61,9 +60,6 @@ class PullRequestActivity : AppCompatActivity() {
             override fun onResponse(call: Call<JsonArray>, response: Response<JsonArray>) {
                 var i: Int = 1
 
-
-//                val objeto2 = response.body()?.get("size").toString()
-//                val objeto = response.body()?.get("items")
                 val objeto = response.body()?.asJsonArray
 
                 Log.d("teste request", objeto.toString())
@@ -71,8 +67,6 @@ class PullRequestActivity : AppCompatActivity() {
                     objeto?.asJsonArray?.forEach {
                         val getUsers = objeto?.asJsonArray?.get(i)
                         val getUser = getUsers?.asJsonObject?.get("user")
-                        val getItems = objeto?.asJsonArray?.get(i)
-                        getItems?.asJsonObject?.get("name")
 
                         addPullRequest(
                             nomeAutor =formataString(getUser?.asJsonObject?.get("login").toString()) ,
@@ -81,9 +75,6 @@ class PullRequestActivity : AppCompatActivity() {
                             bodyPull = formataString(getUsers?.asJsonObject?.get("body").toString()),
                         )
 
-//                        if (i == 29) {
-//                            return
-//                        }
                         i++
 
                     }

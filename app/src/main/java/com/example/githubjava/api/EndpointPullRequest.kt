@@ -9,8 +9,10 @@ import retrofit2.http.Query
 
 interface EndpointPullRequest {
     @GET("https://api.github.com/repos/{criador}/{repositorio}/pulls")
-    fun getCurrencies(@Path(value = "criador",encoded = true)criador :String, @Path(value = "repositorio",encoded = true) repositorio:String) : Call<JsonArray>
+    fun getCurrencies(
+        @Path(value = "criador",encoded = true)criador :String,
+        @Path(value = "repositorio",encoded = true) repositorio:String
+    ) : Call<JsonArray>
 
-//    fun getCurrencies(@Path(value = "criador",encoded = true)criador :String, @Path(value = "repositorio",encoded = true) repositorio:String) : Call<JsonObject>
 
 }
