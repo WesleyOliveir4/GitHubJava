@@ -1,19 +1,17 @@
-package com.example.githubjava.model
+package com.example.githubjava.model.consultive
 
 import android.util.Log
-import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.githubjava.api.EndpointRepositorios
 import com.example.githubjava.api.network.NetworkUtils
 import com.example.githubjava.dao.RepositorioDao
+import com.example.githubjava.model.Repositorio
 import com.example.githubjava.ui.recyclerview.adapter.ListaRepositoriosAdapter
 import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class GitHubConsultive(
+class RepositorioConsultive(
     val dao: RepositorioDao,
     val adapter: ListaRepositoriosAdapter
 ) {
