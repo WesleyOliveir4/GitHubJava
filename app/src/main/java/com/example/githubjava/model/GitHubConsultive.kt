@@ -15,13 +15,14 @@ import retrofit2.Response
 
 class GitHubConsultive(
     val dao: RepositorioDao,
-    val adapterTeste: RecyclerView.ViewHolder?,
     val adapter: ListaRepositoriosAdapter
 ) {
 
 
-   private fun consultaApiGit(paginaAtual:Int) {
+    fun consultaApiGit(paginaAtual:Int) {
         buscandoRepositorios(paginaAtual)
+        adapter.atualiza(dao.buscaTodosRepositorios())
+        dao.removeTodosRepositorios()
         adapter.atualiza(dao.buscaTodosRepositorios())
     }
 
