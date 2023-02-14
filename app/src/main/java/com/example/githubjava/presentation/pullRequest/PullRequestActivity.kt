@@ -1,15 +1,15 @@
-package com.example.githubjava.ui.activity
+package com.example.githubjava.presentation.pullRequest
 
 import android.os.Bundle
 import android.util.Log
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import com.example.githubjava.api.EndpointPullRequest
-import com.example.githubjava.api.network.NetworkUtils
-import com.example.githubjava.dao.PullRequestDao
+import com.example.githubjava.data.api.EndpointPullRequest
+import com.example.githubjava.data.api.network.NetworkUtils
+import com.example.githubjava.data.dao.PullRequestDao
 import com.example.githubjava.databinding.ActivityPullRequestBinding
-import com.example.githubjava.model.PullRequests
-import com.example.githubjava.ui.recyclerview.adapter.ListaPullRequestsAdapter
+import com.example.githubjava.data.model.PullRequests
+import com.example.githubjava.ui.adapter.ListaPullRequestsAdapter
 import com.google.gson.JsonArray
 import retrofit2.Call
 import retrofit2.Callback

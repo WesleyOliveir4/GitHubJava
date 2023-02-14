@@ -1,4 +1,4 @@
-package com.example.githubjava.model
+package com.example.githubjava.data.model
 
 import java.math.BigDecimal
 

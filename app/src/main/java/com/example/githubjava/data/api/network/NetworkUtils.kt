@@ -1,4 +1,4 @@
-package com.example.githubjava.api.network
+package com.example.githubjava.data.api.network
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

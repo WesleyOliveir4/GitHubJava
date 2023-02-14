@@ -1,4 +1,4 @@
-package com.example.githubjava.model
+package com.example.githubjava.data.model
 
 import android.widget.ImageView
 import java.util.Date

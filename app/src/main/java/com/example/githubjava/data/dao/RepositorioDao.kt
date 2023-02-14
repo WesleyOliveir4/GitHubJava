@@ -1,16 +1,6 @@
-package com.example.githubjava.dao
+package com.example.githubjava.data.dao
 
-import android.util.Log
-import com.example.githubjava.api.EndpointRepositorios
-import com.example.githubjava.api.network.NetworkUtils
-import com.example.githubjava.databinding.ActivityHomeBinding
-import com.example.githubjava.model.Repositorio
-import com.example.githubjava.ui.activity.HomeActivity
-import com.example.githubjava.ui.recyclerview.adapter.ListaRepositoriosAdapter
-import com.google.gson.JsonObject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.githubjava.data.model.Repositorio
 
 class RepositorioDao {
 

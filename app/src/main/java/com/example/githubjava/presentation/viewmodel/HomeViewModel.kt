@@ -1,9 +1,9 @@
-package com.example.githubjava.presentation.home.viewmodel
+package com.example.githubjava.presentation.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.githubjava.presentation.home.state.HomeState
+import com.example.githubjava.presentation.state.HomeState
 
 class HomeViewModel : ViewModel() {
 

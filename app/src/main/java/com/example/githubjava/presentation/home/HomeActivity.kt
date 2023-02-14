@@ -1,4 +1,4 @@
-package com.example.githubjava.ui.activity
+package com.example.githubjava.presentation.home
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,12 +6,13 @@ import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import com.example.githubjava.api.EndpointRepositorios
-import com.example.githubjava.api.network.NetworkUtils
-import com.example.githubjava.dao.RepositorioDao
+import com.example.githubjava.data.api.EndpointRepositorios
+import com.example.githubjava.data.api.network.NetworkUtils
+import com.example.githubjava.data.dao.RepositorioDao
 import com.example.githubjava.databinding.ActivityHomeBinding
-import com.example.githubjava.model.Repositorio
-import com.example.githubjava.ui.recyclerview.adapter.ListaRepositoriosAdapter
+import com.example.githubjava.data.model.Repositorio
+import com.example.githubjava.presentation.pullRequest.PullRequestActivity
+import com.example.githubjava.ui.adapter.ListaRepositoriosAdapter
 import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -159,7 +160,7 @@ class HomeActivity : AppCompatActivity(), ListaRepositoriosAdapter.SelecionaRepo
 
     override fun selecionaRepositorio(repositorio: Repositorio) {
 
-        val intent = Intent(this,PullRequestActivity::class.java).apply {
+        val intent = Intent(this, PullRequestActivity::class.java).apply {
             putExtra("repositorio.nomeAutor",repositorio.nomeAutor)
             putExtra("repositorio.nomeRepositorio",repositorio.nomeRepositorio)
         }
