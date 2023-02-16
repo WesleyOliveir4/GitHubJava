@@ -24,6 +24,7 @@ class HomeViewModel(homeActivity: HomeActivity) : ViewModel(){
 
     private val _state by lazy { MutableLiveData<HomeState>() }
     val state: LiveData<HomeState> = _state
+
     private var paginaAtual: Int = 1
 
     private var dao = RepositorioDao()
@@ -84,7 +85,7 @@ class HomeViewModel(homeActivity: HomeActivity) : ViewModel(){
                         val getItems = objeto?.asJsonArray?.get(i)
                         getItems?.asJsonObject?.get("name")
 
-                         addRepositorioNovo(
+                        addRepositorioNovo(
                             nomeRepositorio = formataString(
                                 getItems?.asJsonObject?.get("name").toString()
                             ),
