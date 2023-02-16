@@ -1,12 +1,9 @@
 package com.example.githubjava.presentation.viewmodel
 
-import android.annotation.SuppressLint
-import android.content.Context
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,7 +13,6 @@ import com.example.githubjava.data.api.network.NetworkUtils
 import com.example.githubjava.data.dao.RepositorioDao
 import com.example.githubjava.data.model.Repositorio
 import com.example.githubjava.presentation.home.HomeActivity
-import com.example.githubjava.presentation.pullRequest.PullRequestActivity
 import com.example.githubjava.presentation.state.HomeState
 import com.example.githubjava.ui.adapter.ListaRepositoriosAdapter
 import com.google.gson.JsonObject
@@ -24,18 +20,15 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomeViewModel(
-    private val adapter: ListaRepositoriosAdapter,
-    private val dao: RepositorioDao,
-) : ViewModel(){
+class HomeViewModel(homeActivity: HomeActivity) : ViewModel(){
 
     private val _state by lazy { MutableLiveData<HomeState>() }
     val state: LiveData<HomeState> = _state
     private var paginaAtual: Int = 1
 
+    private var dao = RepositorioDao()
+    private var adapter = ListaRepositoriosAdapter(context = homeActivity, repositorios = dao.buscaTodosRepositorios(), selecionaRepositorio =homeActivity )
 
-//    private var dao = RepositorioDao()
-//    private var adapter = ListaRepositoriosAdapter(context = context, repositorios = dao.buscaTodosRepositorios(), selecionaRepositorio = selecionaRepositorio as ListaRepositoriosAdapter.SelecionaRepositorio)
 
     fun configuraRecyclerView(recyclerView: RecyclerView) {
         recyclerView.adapter = adapter

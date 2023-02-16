@@ -19,6 +19,7 @@ class HomeActivity : AppCompatActivity(), ListaRepositoriosAdapter.SelecionaRepo
         ActivityHomeBinding.inflate(layoutInflater)
     }
 
+   private val homeViewModel = HomeViewModel(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,9 +33,6 @@ class HomeActivity : AppCompatActivity(), ListaRepositoriosAdapter.SelecionaRepo
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
-        val dao = RepositorioDao()
-        val adapter = ListaRepositoriosAdapter(context = this, repositorios = dao.buscaTodosRepositorios(),this)
-        val homeViewModel = HomeViewModel(adapter = adapter, dao = dao )
 
         val recyclerView = binding.recyclerView
         val btnAnterior = binding.btnAnterior
