@@ -22,7 +22,7 @@
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:text="Anterior"
+        android:text="@string/label_home_anterior"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
     <Button
@@ -30,7 +30,7 @@
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:text="Seguinte"
+        android:text="@string/label_home_seguinte"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
     <TextView

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GitHubJava</string>
+    <string name="label_home_anterior">Anterior</string>
+    <string name="label_home_seguinte">Seguinte</string>
 </resources>
