@@ -32,6 +32,6 @@ jobs:
 
       - name: Upload test report
         run: actions/upload-artifact@v2
-          with:
-            name: unit_test_report
-            path: app/build/reports/tests/testDebugUnitTest/
+        with:
+          name: unit_test_report
+          path: app/build/reports/tests/testDebugUnitTest/
