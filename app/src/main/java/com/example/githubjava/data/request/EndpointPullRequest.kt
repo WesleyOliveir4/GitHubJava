@@ -1,4 +1,4 @@
-package com.example.githubjava.data.api
+package com.example.githubjava.data.request
 
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject

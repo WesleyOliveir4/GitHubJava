@@ -1,8 +1,6 @@
 package com.example.githubjava.data.repository
 
-import com.example.githubjava.data.api.EndpointPullRequest
-import com.google.gson.JsonArray
-import retrofit2.Call
+import com.example.githubjava.data.request.EndpointPullRequest
 
 class PullRequestRepositoryImpl(
     private val endpointPullRequest: EndpointPullRequest

@@ -8,7 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
-import com.example.githubjava.data.api.EndpointRepositorios
+import com.example.githubjava.data.request.EndpointRepositorios
 import com.example.githubjava.data.api.network.NetworkUtils
 import com.example.githubjava.data.dao.RepositorioDao
 import com.example.githubjava.data.model.Repositorio

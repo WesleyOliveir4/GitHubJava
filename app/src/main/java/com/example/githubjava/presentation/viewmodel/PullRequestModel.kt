@@ -3,7 +3,7 @@ package com.example.githubjava.presentation.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
-import com.example.githubjava.data.api.EndpointPullRequest
+import com.example.githubjava.data.request.EndpointPullRequest
 import com.example.githubjava.data.api.network.NetworkUtils
 import com.example.githubjava.data.dao.PullRequestDao
 import com.example.githubjava.data.model.PullRequests
