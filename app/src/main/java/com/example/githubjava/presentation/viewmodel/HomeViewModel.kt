@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.githubjava.data.request.EndpointRepositorios
 import com.example.githubjava.data.api.network.NetworkUtils
 import com.example.githubjava.data.dao.RepositorioDao
-import com.example.githubjava.data.model.Repositorio
+import com.example.githubjava.data.models.Repositorio
 import com.example.githubjava.presentation.home.HomeActivity
 import com.example.githubjava.presentation.state.HomeState
 import com.example.githubjava.ui.adapter.ListaRepositoriosAdapter

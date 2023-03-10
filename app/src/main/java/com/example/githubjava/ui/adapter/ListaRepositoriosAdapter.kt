@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.githubjava.databinding.RepositorioItemBinding
 import com.example.githubjava.data.extensoes.CarregaImagem
-import com.example.githubjava.data.model.Repositorio
+import com.example.githubjava.data.models.Repositorio
 
 class ListaRepositoriosAdapter(
     private val context: Context,

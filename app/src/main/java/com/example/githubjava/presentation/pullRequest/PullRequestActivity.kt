@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.githubjava.databinding.ActivityPullRequestBinding
-import com.example.githubjava.presentation.viewmodel.PullRequestModel
+import com.example.githubjava.presentation.viewmodel.PullRequestViewModel
 
 class PullRequestActivity : AppCompatActivity() {
 
@@ -12,7 +12,7 @@ class PullRequestActivity : AppCompatActivity() {
         ActivityPullRequestBinding.inflate(layoutInflater)
     }
 
-    private val pullRequestModel = PullRequestModel(this)
+    private val pullRequestViewModel = PullRequestViewModel(this)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,8 +32,8 @@ class PullRequestActivity : AppCompatActivity() {
         )
         val recyclerView = binding.recyclerView
 
-        pullRequestModel.configuraRecyclerView(recyclerView)
-        pullRequestModel.buscandoPullRequests(nomeCriadorSelecionado.toString(),nomeRepositorioSelecionado.toString())
+        pullRequestViewModel.configuraRecyclerView(recyclerView)
+        pullRequestViewModel.buscandoPullRequests(nomeCriadorSelecionado.toString(),nomeRepositorioSelecionado.toString())
     }
 
 

@@ -4,9 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import com.example.githubjava.data.dao.RepositorioDao
 import com.example.githubjava.databinding.ActivityHomeBinding
-import com.example.githubjava.data.model.Repositorio
+import com.example.githubjava.data.models.Repositorio
 import com.example.githubjava.presentation.pullRequest.PullRequestActivity
 import com.example.githubjava.presentation.viewmodel.HomeViewModel
 import com.example.githubjava.ui.adapter.ListaRepositoriosAdapter

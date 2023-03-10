@@ -6,7 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.githubjava.data.request.EndpointPullRequest
 import com.example.githubjava.data.api.network.NetworkUtils
 import com.example.githubjava.data.dao.PullRequestDao
-import com.example.githubjava.data.model.PullRequests
+import com.example.githubjava.data.models.PullRequests
+import com.example.githubjava.data.repository.PullRequestRepositoryImpl
 import com.example.githubjava.presentation.pullRequest.PullRequestActivity
 import com.example.githubjava.ui.adapter.ListaPullRequestsAdapter
 import com.google.gson.JsonArray
@@ -14,7 +15,12 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class PullRequestModel(pullRequestActivity: PullRequestActivity) : ViewModel() {
+class PullRequestViewModel(
+    pullRequestActivity: PullRequestActivity,
+    private val repositoryImpl:PullRequestRepositoryImpl = PullRequestRepositoryImpl()
+) : ViewModel()
+{
+
 
     private var dao = PullRequestDao()
     private var adapter =
@@ -24,12 +30,15 @@ class PullRequestModel(pullRequestActivity: PullRequestActivity) : ViewModel() {
         recyclerView.adapter = adapter
     }
     fun buscandoPullRequests(nomeCriador: String, nomeRepositorio: String) {
-        val retrofitClient = NetworkUtils.getRetrofitInstance("https://api.github.com/repos/")
-        val endpoint = retrofitClient.create(EndpointPullRequest::class.java)
+
+        val fetchCurrencies = repositoryImpl.fetchCurrencies(nomeCriador, nomeRepositorio)
+//        val retrofitClient = NetworkUtils.getRetrofitInstance("https://api.github.com/repos/")
+//        val endpoint = retrofitClient.create(EndpointPullRequest::class.java)
+
         dao.removeTodosPullRequests()
         adapter.atualiza(dao.buscaTodosPullRequests())
 
-        endpoint.getCurrencies(nomeCriador,nomeRepositorio).enqueue(object : Callback<JsonArray> {
+        fetchCurrencies.enqueue(object : Callback<JsonArray> {
             override fun onResponse(call: Call<JsonArray>, response: Response<JsonArray>) {
                 var i: Int = 1
 

@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.githubjava.databinding.PullRequestItemBinding
-import com.example.githubjava.data.model.PullRequests
+import com.example.githubjava.data.models.PullRequests
 
 class ListaPullRequestsAdapter (
     private val context: Context,

@@ -1,6 +1,6 @@
 package com.example.githubjava.data.dao
 
-import com.example.githubjava.data.model.Repositorio
+import com.example.githubjava.data.models.Repositorio
 
 class RepositorioDao {
 
