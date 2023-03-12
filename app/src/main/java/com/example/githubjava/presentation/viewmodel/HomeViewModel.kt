@@ -12,6 +12,8 @@ import com.example.githubjava.data.request.EndpointRepositorios
 import com.example.githubjava.data.api.network.NetworkUtils
 import com.example.githubjava.data.dao.RepositorioDao
 import com.example.githubjava.data.models.Repositorio
+import com.example.githubjava.data.repository.PullRequestRepositoryImpl
+import com.example.githubjava.data.repository.RepositorioRepositoryImpl
 import com.example.githubjava.presentation.home.HomeActivity
 import com.example.githubjava.presentation.state.HomeState
 import com.example.githubjava.ui.adapter.ListaRepositoriosAdapter
@@ -27,6 +29,7 @@ class HomeViewModel(homeActivity: HomeActivity) : ViewModel(){
 
     private var paginaAtual: Int = 1
 
+    private val repositoryImpl: RepositorioRepositoryImpl = RepositorioRepositoryImpl ()
     private var dao = RepositorioDao()
     private var adapter = ListaRepositoriosAdapter(context = homeActivity, repositorios = dao.buscaTodosRepositorios(), selecionaRepositorio =homeActivity )
 
@@ -66,14 +69,15 @@ class HomeViewModel(homeActivity: HomeActivity) : ViewModel(){
     }
 
     fun buscandoRepositorios(page: Int) {
-        val retrofitClient = NetworkUtils.getRetrofitInstance("https://api.github.com/search/")
-        val endpoint = retrofitClient.create(EndpointRepositorios::class.java)
+        val fetchCurrencies = repositoryImpl.fetchCurrencies("$page")
+//        val retrofitClient = NetworkUtils.getRetrofitInstance("https://api.github.com/search/")
+//        val endpoint = retrofitClient.create(EndpointRepositorios::class.java)
         val page = page
         if (page < 1) {
             page == 1
         }
 
-        endpoint.getCurrencies("$page").enqueue(object : Callback<JsonObject> {
+        fetchCurrencies.enqueue(object : Callback<JsonObject> {
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                 var i: Int = 1
 
