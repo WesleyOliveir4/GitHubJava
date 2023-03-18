@@ -1,15 +1,13 @@
-package com.example.githubjava.ui.recyclerview.adapter
+package com.example.githubjava.ui.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.githubjava.databinding.RepositorioItemBinding
-import com.example.githubjava.extensoes.CarregaImagem
-import com.example.githubjava.model.Repositorio
-import java.util.*
+import com.example.githubjava.data.extensoes.CarregaImagem
+import com.example.githubjava.data.models.Repositorio
 
 class ListaRepositoriosAdapter(
     private val context: Context,

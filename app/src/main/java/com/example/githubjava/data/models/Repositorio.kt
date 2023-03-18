@@ -1,6 +1,4 @@
-package com.example.githubjava.model
-
-import java.math.BigDecimal
+package com.example.githubjava.data.models
 
 data class Repositorio (
 

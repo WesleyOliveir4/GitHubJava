@@ -1,11 +1,11 @@
-package com.example.githubjava.ui.recyclerview.adapter
+package com.example.githubjava.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.githubjava.databinding.PullRequestItemBinding
-import com.example.githubjava.model.PullRequests
+import com.example.githubjava.data.models.PullRequests
 
 class ListaPullRequestsAdapter (
     private val context: Context,

@@ -1,7 +1,4 @@
-package com.example.githubjava.model
-
-import android.widget.ImageView
-import java.util.Date
+package com.example.githubjava.data.models
 
 class PullRequests (
 

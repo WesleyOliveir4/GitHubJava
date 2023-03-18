@@ -1,4 +1,4 @@
-package com.example.githubjava.api
+package com.example.githubjava.data.request
 
 import com.google.gson.JsonObject
 import retrofit2.Call

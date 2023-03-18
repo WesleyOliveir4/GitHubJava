@@ -1,6 +1,6 @@
-package com.example.githubjava.dao
+package com.example.githubjava.data.dao
 
-import com.example.githubjava.model.PullRequests
+import com.example.githubjava.data.models.PullRequests
 
 class PullRequestDao {
     fun adicionaPullRequest(pullRequest: PullRequests){

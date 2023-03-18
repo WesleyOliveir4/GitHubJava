@@ -1,4 +1,4 @@
-package com.example.githubjava.extensoes
+package com.example.githubjava.data.extensoes
 
 import android.widget.ImageView
 import coil.load
