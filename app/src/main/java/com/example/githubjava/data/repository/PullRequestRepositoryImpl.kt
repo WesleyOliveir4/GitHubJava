@@ -22,8 +22,7 @@ class PullRequestRepositoryImpl(
         val endpoint = retrofitClient.create(EndpointPullRequest::class.java)
         val currencies = endpoint.getCurrencies(criador, repositorio)
 
-
-        currencies.enqueue(object : Callback<JsonArray> {
+       currencies.enqueue(object : Callback<JsonArray> {
             override fun onResponse(call: Call<JsonArray>, response: Response<JsonArray>) {
                 var i: Int = 1
 
