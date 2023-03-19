@@ -14,10 +14,14 @@ import com.example.githubjava.data.dao.RepositorioDao
 import com.example.githubjava.data.models.Repositorio
 import com.example.githubjava.data.repository.PullRequestRepositoryImpl
 import com.example.githubjava.data.repository.RepositorioRepositoryImpl
+import com.example.githubjava.data.model.consultive.RepositorioConsultive
 import com.example.githubjava.presentation.home.HomeActivity
 import com.example.githubjava.presentation.state.HomeState
 import com.example.githubjava.ui.adapter.ListaRepositoriosAdapter
 import com.google.gson.JsonObject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,6 +32,8 @@ class HomeViewModel(homeActivity: HomeActivity) : ViewModel(){
     val state: LiveData<HomeState> = _state
 
     private var paginaAtual: Int = 1
+    
+    private val repositorioConsultive : RepositorioConsultive = RepositorioConsultive()
 
     private val repositoryImpl: RepositorioRepositoryImpl = RepositorioRepositoryImpl ()
     private var dao = RepositorioDao()
@@ -69,62 +75,68 @@ class HomeViewModel(homeActivity: HomeActivity) : ViewModel(){
     }
 
     fun buscandoRepositorios(page: Int) {
-        val fetchCurrencies = repositoryImpl.fetchCurrencies("$page")
-//        val retrofitClient = NetworkUtils.getRetrofitInstance("https://api.github.com/search/")
-//        val endpoint = retrofitClient.create(EndpointRepositorios::class.java)
-        val page = page
-        if (page < 1) {
-            page == 1
+        CoroutineScope(Dispatchers.Default).async{
+            repositorioConsultive.consultaApiGit(page)
+            adapter.atualiza(dao.buscaTodosRepositorios())
         }
 
-        fetchCurrencies.enqueue(object : Callback<JsonObject> {
-            override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
-                var i: Int = 1
 
-                val objeto = response.body()?.get("items")
-                try {
-                    objeto?.asJsonArray?.forEach {
-                        val getOwners = objeto?.asJsonArray?.get(i)
-                        val getOwner = getOwners?.asJsonObject?.get("owner")
-                        val getItems = objeto?.asJsonArray?.get(i)
-                        getItems?.asJsonObject?.get("name")
+//        val fetchCurrencies = repositoryImpl.fetchCurrencies("$page")
+//        val retrofitClient = NetworkUtils.getRetrofitInstance("https://api.github.com/search/")
+//        val endpoint = retrofitClient.create(EndpointRepositorios::class.java)
+//        val page = page
+//        if (page < 1) {
+//            page == 1
+//        }
 
-                        addRepositorioNovo(
-                            nomeRepositorio = formataString(
-                                getItems?.asJsonObject?.get("name").toString()
-                            ),
-                            descricaoRepositorio = formataString(
-                                getItems?.asJsonObject?.get("description").toString()
-                            ),
-                            nomeAutor = formataString(
-                                getOwner?.asJsonObject?.get("login").toString()
-                            ),
-                            fotoAutor = formataString(
-                                getOwner?.asJsonObject?.get("avatar_url").toString()
-                            ),
-                            numeroStars = formataString(
-                                getItems?.asJsonObject?.get("stargazers_count").toString()
-                            ),
-                            numeroForks = formataString(
-                                getItems?.asJsonObject?.get("forks").toString()
-                            )
-                        )
-                        if (i == 29) {
-                            return
-                        }
-                        i++
-
-                    }
-                } catch (e: Exception) {
-                    Log.d("Erro ao pesquisar repo", i.toString() + e.toString())
-                }
-            }
-
-            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-
-            }
-
-        })
+//        fetchCurrencies.enqueue(object : Callback<JsonObject> {
+//            override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+//                var i: Int = 1
+//
+//                val objeto = response.body()?.get("items")
+//                try {
+//                    objeto?.asJsonArray?.forEach {
+//                        val getOwners = objeto?.asJsonArray?.get(i)
+//                        val getOwner = getOwners?.asJsonObject?.get("owner")
+//                        val getItems = objeto?.asJsonArray?.get(i)
+//                        getItems?.asJsonObject?.get("name")
+//
+//                        addRepositorioNovo(
+//                            nomeRepositorio = formataString(
+//                                getItems?.asJsonObject?.get("name").toString()
+//                            ),
+//                            descricaoRepositorio = formataString(
+//                                getItems?.asJsonObject?.get("description").toString()
+//                            ),
+//                            nomeAutor = formataString(
+//                                getOwner?.asJsonObject?.get("login").toString()
+//                            ),
+//                            fotoAutor = formataString(
+//                                getOwner?.asJsonObject?.get("avatar_url").toString()
+//                            ),
+//                            numeroStars = formataString(
+//                                getItems?.asJsonObject?.get("stargazers_count").toString()
+//                            ),
+//                            numeroForks = formataString(
+//                                getItems?.asJsonObject?.get("forks").toString()
+//                            )
+//                        )
+//                        if (i == 29) {
+//                            return
+//                        }
+//                        i++
+//
+//                    }
+//                } catch (e: Exception) {
+//                    Log.d("Erro ao pesquisar repo", i.toString() + e.toString())
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+//
+//            }
+//
+//        })
 
 
     }

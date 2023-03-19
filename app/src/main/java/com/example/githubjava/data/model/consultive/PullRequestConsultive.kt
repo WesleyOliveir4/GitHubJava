@@ -1,11 +1,11 @@
-package com.example.githubjava.model.consultive
+package com.example.githubjava.data.model.consultive
 
 import android.util.Log
-import com.example.githubjava.api.EndpointPullRequest
-import com.example.githubjava.api.network.NetworkUtils
-import com.example.githubjava.dao.PullRequestDao
-import com.example.githubjava.model.PullRequests
-import com.example.githubjava.ui.recyclerview.adapter.ListaPullRequestsAdapter
+import com.example.githubjava.data.api.network.NetworkUtils
+import com.example.githubjava.data.dao.PullRequestDao
+import com.example.githubjava.data.models.PullRequests
+import com.example.githubjava.data.request.EndpointPullRequest
+import com.example.githubjava.ui.adapter.ListaPullRequestsAdapter
 import com.google.gson.JsonArray
 import retrofit2.Call
 import retrofit2.Callback
@@ -28,8 +28,6 @@ class PullRequestConsultive(
                 var i: Int = 1
 
                 val objeto = response.body()?.asJsonArray
-
-                Log.d("teste request", objeto.toString())
                 try {
                     objeto?.asJsonArray?.forEach {
                         val getUsers = objeto?.asJsonArray?.get(i)

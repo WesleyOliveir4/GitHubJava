@@ -1,38 +1,45 @@
-package com.example.githubjava.model.consultive
+package com.example.githubjava.data.model.consultive
 
 import android.util.Log
-import com.example.githubjava.api.EndpointRepositorios
-import com.example.githubjava.api.network.NetworkUtils
-import com.example.githubjava.dao.RepositorioDao
-import com.example.githubjava.model.Repositorio
-import com.example.githubjava.ui.recyclerview.adapter.ListaRepositoriosAdapter
+import com.example.githubjava.data.api.network.NetworkUtils
+import com.example.githubjava.data.dao.RepositorioDao
+import com.example.githubjava.data.mapper.ResponseRepositorio
+import com.example.githubjava.data.models.Repositorio
+import com.example.githubjava.data.repository.PullRequestRepositoryImpl
+import com.example.githubjava.data.repository.RepositorioRepositoryImpl
+import com.example.githubjava.data.request.EndpointRepositorios
+import com.example.githubjava.ui.adapter.ListaRepositoriosAdapter
 import com.google.gson.JsonObject
+import okhttp3.internal.wait
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class RepositorioConsultive(
-    val dao: RepositorioDao,
-    val adapter: ListaRepositoriosAdapter
+//    val dao: RepositorioDao,
+//    val adapter: ListaRepositoriosAdapter
 ) {
 
+    private val repositoryImpl: RepositorioRepositoryImpl = RepositorioRepositoryImpl()
+    private val responseRepositorio: ResponseRepositorio = ResponseRepositorio()
+    private val dao: RepositorioDao = RepositorioDao()
 
-    fun consultaApiGit(paginaAtual:Int) {
+   suspend fun consultaApiGit(paginaAtual:Int){
         buscandoRepositorios(paginaAtual)
-        adapter.atualiza(dao.buscaTodosRepositorios())
-        dao.removeTodosRepositorios()
-        adapter.atualiza(dao.buscaTodosRepositorios())
+
+//        adapter.atualiza(dao.buscaTodosRepositorios())
+//        dao.removeTodosRepositorios()
+//        adapter.atualiza(dao.buscaTodosRepositorios())
     }
 
-   private fun buscandoRepositorios(page: Int) {
-        val retrofitClient = NetworkUtils.getRetrofitInstance("https://api.github.com/search/")
-        val endpoint = retrofitClient.create(EndpointRepositorios::class.java)
+   private suspend fun buscandoRepositorios(page: Int) {
+       val fetchCurrencies = repositoryImpl.fetchCurrencies(page.toString())
         val page = page
         if (page < 1) {
             page == 1
         }
 
-        endpoint.getCurrencies("$page").enqueue(object : Callback<JsonObject> {
+       fetchCurrencies.enqueue(object : Callback<JsonObject> {
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                 var i: Int = 1
 
@@ -89,12 +96,12 @@ class RepositorioConsultive(
             numeroForks = numeroForks
         )
         dao.adicionaRepositorio(repositoroNovo)
-        adapter.atualiza(dao.buscaTodosRepositorios())
+//        adapter.atualiza(dao.buscaTodosRepositorios())
     }
 
     fun formataString(text:String):String{
         var textModified = text.substring(1, text.length -1)
         return textModified
-    }
+   }
 
 }
