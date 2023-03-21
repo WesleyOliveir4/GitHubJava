@@ -37,12 +37,12 @@ class PullRequestViewModel(
 
         dao.removeTodosPullRequests()
         adapter.atualiza(dao.buscaTodosPullRequests())
-        val listPullRequest = repositoryImpl.fetchCurrencies(nomeCriador, nomeRepositorio)
+//        val listPullRequest = repositoryImpl.fetchCurrencies(nomeCriador, nomeRepositorio)
 
-        listPullRequest.forEach { pullRequests ->
-            dao.adicionaPullRequest(pullRequests)
-        }
-        adapter.atualiza(dao.buscaTodosPullRequests())
+//        listPullRequest.forEach { pullRequests ->
+//            dao.adicionaPullRequest(pullRequests)
+//        }
+//        adapter.atualiza(dao.buscaTodosPullRequests())
 
 //        fetchCurrencies.enqueue(object : Callback<JsonArray> {
 //            override fun onResponse(call: Call<JsonArray>, response: Response<JsonArray>) {

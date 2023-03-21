@@ -6,6 +6,6 @@ import retrofit2.Call
 
 interface PullRequestRepository {
 
-    fun fetchCurrencies(criador: String, repositorio : String): MutableList<PullRequests>
+    suspend fun fetchCurrencies(criador: String, repositorio : String): MutableList<PullRequests>
 
 }

@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.RecyclerView
 import com.example.githubjava.data.request.EndpointRepositorios
 import com.example.githubjava.data.api.network.NetworkUtils
@@ -22,6 +23,7 @@ import com.google.gson.JsonObject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -75,10 +77,15 @@ class HomeViewModel(homeActivity: HomeActivity) : ViewModel(){
     }
 
     fun buscandoRepositorios(page: Int) {
-        CoroutineScope(Dispatchers.Default).async{
-            repositorioConsultive.consultaApiGit(page)
+        viewModelScope.launch {
+         val resultado = repositorioConsultive.consultaApiGit(page)
             adapter.atualiza(dao.buscaTodosRepositorios())
+            _state.postValue(HomeState.ShowItems(resultado.toMutableList()))
         }
+//        CoroutineScope(Dispatchers.Default).async{
+//            repositorioConsultive.consultaApiGit(page)
+//            adapter.atualiza(dao.buscaTodosRepositorios())
+//        }
 
 
 //        val fetchCurrencies = repositoryImpl.fetchCurrencies("$page")
@@ -143,20 +150,20 @@ class HomeViewModel(homeActivity: HomeActivity) : ViewModel(){
 
     fun addRepositorioNovo(
         nomeRepositorio: String,
-        descricaoRepositorio: String,
-        nomeAutor: String,
-        fotoAutor: String,
-        numeroStars: String,
-        numeroForks: String
+//        descricaoRepositorio: String,
+//        nomeAutor: String,
+//        fotoAutor: String,
+//        numeroStars: String,
+//        numeroForks: String
     ) {
 
         val repositoroNovo = Repositorio(
-            nomeRepositorio = nomeRepositorio,
-            descricaoRepositorio = descricaoRepositorio,
-            nomeAutor = nomeAutor,
-            fotoAutor = fotoAutor,
-            numeroStars = numeroStars,
-            numeroForks = numeroForks
+            nomeRepositorio = nomeRepositorio
+//            descricaoRepositorio = descricaoRepositorio,
+//            nomeAutor = nomeAutor,
+//            fotoAutor = fotoAutor,
+//            numeroStars = numeroStars,
+//            numeroForks = numeroForks
         )
         dao.adicionaRepositorio(repositoroNovo)
         adapter.atualiza(dao.buscaTodosRepositorios())

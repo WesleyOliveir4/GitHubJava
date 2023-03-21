@@ -1,11 +1,20 @@
 package com.example.githubjava.data.models
 
-data class Repositorio (
+import com.google.gson.annotations.SerializedName
 
+data class Repositorio (
+    @SerializedName("name")
     val nomeRepositorio: String,
-    val descricaoRepositorio: String,
-    val nomeAutor: String,
-    val fotoAutor: String? = null,
-    val numeroStars: String,
-    val numeroForks: String,
+//    val descricaoRepositorio: String,
+//    val nomeAutor: String,
+//    val fotoAutor: String? = null,
+//    val numeroStars: String,
+//    val numeroForks: String,
     )
+data class JavaRepos(
+
+    @SerializedName("total_count")
+    val totalCont : Long,
+    @SerializedName("items")
+    val items : MutableList<Repositorio>
+)

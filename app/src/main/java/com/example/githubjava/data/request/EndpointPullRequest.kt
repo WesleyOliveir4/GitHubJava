@@ -1,5 +1,6 @@
 package com.example.githubjava.data.request
 
+import com.example.githubjava.data.models.PullRequests
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import retrofit2.Call
@@ -12,7 +13,7 @@ interface EndpointPullRequest {
     fun getCurrencies(
         @Path(value = "criador",encoded = true)criador :String,
         @Path(value = "repositorio",encoded = true) repositorio:String
-    ) : Call<JsonArray>
+    ) : MutableList<PullRequests>
 
 
 }

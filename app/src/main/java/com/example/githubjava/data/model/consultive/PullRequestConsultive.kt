@@ -23,44 +23,44 @@ class PullRequestConsultive(
         val retrofitClient = NetworkUtils.getRetrofitInstance("https://api.github.com/repos/")
         val endpoint = retrofitClient.create(EndpointPullRequest::class.java)
 
-        endpoint.getCurrencies(nomeCriador, nomeRepositorio).enqueue(object : Callback<JsonArray> {
-            override fun onResponse(call: Call<JsonArray>, response: Response<JsonArray>) {
-                var i: Int = 1
-
-                val objeto = response.body()?.asJsonArray
-                try {
-                    objeto?.asJsonArray?.forEach {
-                        val getUsers = objeto?.asJsonArray?.get(i)
-                        val getUser = getUsers?.asJsonObject?.get("user")
-
-                        addPullRequest(
-                            nomeAutor = formataString(
-                                getUser?.asJsonObject?.get("login").toString()
-                            ),
-                            nomeTitulo = formataString(
-                                getUsers?.asJsonObject?.get("title").toString()
-                            ),
-                            dataPull = formataDataString(
-                                getUsers?.asJsonObject?.get("created_at").toString()
-                            ),
-                            bodyPull = formataString(
-                                getUsers?.asJsonObject?.get("body").toString()
-                            ),
-                        )
-
-                        i++
-
-                    }
-                } catch (e: Exception) {
-                    Log.d("Erro ao pesquisar repo", i.toString() + e.toString())
-                }
-            }
-
-            override fun onFailure(call: Call<JsonArray>, t: Throwable) {
-                Log.d("Erro ao pesquisar repo", t.toString())
-            }
-
-        })
+//        endpoint.getCurrencies(nomeCriador, nomeRepositorio).enqueue(object : Callback<JsonArray> {
+//            override fun onResponse(call: Call<JsonArray>, response: Response<JsonArray>) {
+//                var i: Int = 1
+//
+//                val objeto = response.body()?.asJsonArray
+//                try {
+//                    objeto?.asJsonArray?.forEach {
+//                        val getUsers = objeto?.asJsonArray?.get(i)
+//                        val getUser = getUsers?.asJsonObject?.get("user")
+//
+//                        addPullRequest(
+//                            nomeAutor = formataString(
+//                                getUser?.asJsonObject?.get("login").toString()
+//                            ),
+//                            nomeTitulo = formataString(
+//                                getUsers?.asJsonObject?.get("title").toString()
+//                            ),
+//                            dataPull = formataDataString(
+//                                getUsers?.asJsonObject?.get("created_at").toString()
+//                            ),
+//                            bodyPull = formataString(
+//                                getUsers?.asJsonObject?.get("body").toString()
+//                            ),
+//                        )
+//
+//                        i++
+//
+//                    }
+//                } catch (e: Exception) {
+//                    Log.d("Erro ao pesquisar repo", i.toString() + e.toString())
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<JsonArray>, t: Throwable) {
+//                Log.d("Erro ao pesquisar repo", t.toString())
+//            }
+//
+//        })
 
 
     }
