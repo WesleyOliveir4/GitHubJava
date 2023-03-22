@@ -28,18 +28,22 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomeViewModel(homeActivity: HomeActivity) : ViewModel(){
+class HomeViewModel(homeActivity: HomeActivity) : ViewModel() {
 
     private val _state by lazy { MutableLiveData<HomeState>() }
     val state: LiveData<HomeState> = _state
 
     private var paginaAtual: Int = 1
-    
-    private val repositorioConsultive : RepositorioConsultive = RepositorioConsultive()
 
-    private val repositoryImpl: RepositorioRepositoryImpl = RepositorioRepositoryImpl ()
+    private val repositorioConsultive: RepositorioConsultive = RepositorioConsultive()
+
+    private val repositoryImpl: RepositorioRepositoryImpl = RepositorioRepositoryImpl()
     private var dao = RepositorioDao()
-    private var adapter = ListaRepositoriosAdapter(context = homeActivity, repositorios = dao.buscaTodosRepositorios(), selecionaRepositorio =homeActivity )
+    private var adapter = ListaRepositoriosAdapter(
+        context = homeActivity,
+        repositorios = dao.buscaTodosRepositorios(),
+        selecionaRepositorio = homeActivity
+    )
 
 
     fun configuraRecyclerView(recyclerView: RecyclerView) {
@@ -78,7 +82,7 @@ class HomeViewModel(homeActivity: HomeActivity) : ViewModel(){
 
     fun buscandoRepositorios(page: Int) {
         viewModelScope.launch {
-         val resultado = repositorioConsultive.consultaApiGit(page)
+            val resultado = repositorioConsultive.consultaApiGit(page)
             adapter.atualiza(dao.buscaTodosRepositorios())
             _state.postValue(HomeState.ShowItems(resultado.toMutableList()))
         }

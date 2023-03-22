@@ -21,22 +21,14 @@ class HomeActivity : AppCompatActivity(), ListaRepositoriosAdapter.SelecionaRepo
         ActivityHomeBinding.inflate(layoutInflater)
     }
 
-   private val homeViewModel = HomeViewModel(this)
+    private val homeViewModel = HomeViewModel(this)
     private var adapter = ListaRepositoriosAdapter(context = this, repositorios = mutableListOf(), this )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        homeViewModel.state.observe(this, Observer { state ->
-            when(state){
-                is HomeState.ShowItems -> {
-                    adapter.atualiza(state.items)
-                    Log.d("stateHomeActivity", "${state.items[0].nomeRepositorio}")
-                }
-                else -> Log.d("stateHomeActivity", "retornou com erro")
-            }
-        })
+
     }
 
     override fun onResume() {
@@ -50,6 +42,17 @@ class HomeActivity : AppCompatActivity(), ListaRepositoriosAdapter.SelecionaRepo
         val btnAnterior = binding.btnAnterior
         val btnSeguinte = binding.btnSeguinte
         val tvNumeroPagina = binding.tvNumeroPagina
+
+        homeViewModel.state.observe(this, Observer { state ->
+            when(state){
+                is HomeState.ShowItems -> {
+                    recyclerView.adapter = adapter
+                    adapter.atualiza(state.items)
+                    Log.d("stateHomeActivity", "${state.items[0].nomeRepositorio}")
+                }
+                else -> Log.d("stateHomeActivity", "retornou com erro")
+            }
+        })
 
         homeViewModel.configuraRecyclerView(recyclerView)
         homeViewModel.configuraPaginacao(btnAnterior, btnSeguinte, tvNumeroPagina)
