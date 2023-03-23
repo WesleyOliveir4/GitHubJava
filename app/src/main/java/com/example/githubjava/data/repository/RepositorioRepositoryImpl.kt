@@ -15,9 +15,22 @@ class RepositorioRepositoryImpl() :RepositorioRepository {
         return withContext(Dispatchers.IO){
             val retrofitClient = NetworkUtils.getRetrofitInstance("https://api.github.com/search/")
             val endpoint = retrofitClient.create(EndpointRepositorios::class.java)
-            endpoint.getCurrencies(page).items
+            endpoint.getCurrencies(page).items.toItemJava().toMutableList()
+
         }
 
+    }
+
+    private fun List<Repositorio>.toItemJava() = map {
+        Repositorio(
+            nomeRepositorio = it.nomeRepositorio ?: "",
+            descricaoRepositorio = it.descricaoRepositorio,
+            nomeAutor =  it.owner?.login ?: "",
+            fotoAutor = it.owner?.avatarUrl ?: "",
+            numeroStars = it.numeroForks.toString(),
+            numeroForks = it.numeroStars.toString(),
+            owner = null
+        )
     }
 
 }

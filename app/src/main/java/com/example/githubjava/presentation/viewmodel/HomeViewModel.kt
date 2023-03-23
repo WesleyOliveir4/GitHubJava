@@ -154,20 +154,20 @@ class HomeViewModel(homeActivity: HomeActivity) : ViewModel() {
 
     fun addRepositorioNovo(
         nomeRepositorio: String,
-//        descricaoRepositorio: String,
-//        nomeAutor: String,
-//        fotoAutor: String,
-//        numeroStars: String,
-//        numeroForks: String
+        descricaoRepositorio: String,
+        nomeAutor: String,
+        fotoAutor: String,
+        numeroStars: String,
+        numeroForks: String
     ) {
 
         val repositoroNovo = Repositorio(
-            nomeRepositorio = nomeRepositorio
-//            descricaoRepositorio = descricaoRepositorio,
-//            nomeAutor = nomeAutor,
-//            fotoAutor = fotoAutor,
-//            numeroStars = numeroStars,
-//            numeroForks = numeroForks
+            nomeRepositorio = nomeRepositorio,
+            descricaoRepositorio = descricaoRepositorio,
+            nomeAutor = nomeAutor,
+            fotoAutor = fotoAutor,
+            numeroStars = numeroStars,
+            numeroForks = numeroForks
         )
         dao.adicionaRepositorio(repositoroNovo)
         adapter.atualiza(dao.buscaTodosRepositorios())

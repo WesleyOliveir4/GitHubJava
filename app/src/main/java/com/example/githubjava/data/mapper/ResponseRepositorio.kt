@@ -21,11 +21,11 @@ class ResponseRepositorio() {
 
         val RepositorioNovo = Repositorio(
             nomeRepositorio = nomeRepositorio,
-//            descricaoRepositorio = descricaoRepositorio,
-//            nomeAutor = nomeAutor,
-//            fotoAutor = fotoAutor,
-//            numeroStars = numeroStars,
-//            numeroForks = numeroForks
+            descricaoRepositorio = descricaoRepositorio,
+            nomeAutor = nomeAutor,
+            fotoAutor = fotoAutor,
+            numeroStars = numeroStars,
+            numeroForks = numeroForks
         )
         listaRepositorios.add(RepositorioNovo)
     }

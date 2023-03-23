@@ -26,14 +26,14 @@ class ListaRepositoriosAdapter(
             val nomeRepositorioTextView = binding.nomeRepositorioRecyclerView
             nomeRepositorioTextView.text = repositorio.nomeRepositorio
             val descricaoRepositorioTextView = binding.descricaoRepositorioRecyclerView
-//            descricaoRepositorioTextView.text = repositorio.descricaoRepositorio
-//            val nomeAutorTextView = binding.nomeAutorRecyclerView
-//            nomeAutorTextView.text = repositorio.nomeAutor
-//            binding.fotoAutorImageView.CarregaImagem(repositorio.fotoAutor)
-//            val numeroStarsTextView = binding.numeroStarsRecyclerView
-//            numeroStarsTextView.text = repositorio.numeroStars
-//            val numeroForksTextView = binding.numeroForksRecyclerView
-//            numeroForksTextView.text = repositorio.numeroForks
+            descricaoRepositorioTextView.text = repositorio.descricaoRepositorio
+            val nomeAutorTextView = binding.nomeAutorRecyclerView
+            nomeAutorTextView.text = repositorio.nomeAutor
+            binding.fotoAutorImageView.CarregaImagem(repositorio.fotoAutor)
+            val numeroStarsTextView = binding.numeroStarsRecyclerView
+            numeroStarsTextView.text = repositorio.numeroStars
+            val numeroForksTextView = binding.numeroForksRecyclerView
+            numeroForksTextView.text = repositorio.numeroForks
 
         }
 
