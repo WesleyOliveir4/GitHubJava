@@ -29,7 +29,7 @@ class RepositorioRepositoryImpl() :RepositorioRepository {
             fotoAutor = it.owner?.avatarUrl ?: "",
             numeroStars = it.numeroForks.toString(),
             numeroForks = it.numeroStars.toString(),
-            owner = null
+            owner = it.owner
         )
     }
 

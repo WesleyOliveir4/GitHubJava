@@ -16,8 +16,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class RepositorioConsultive(
-//    val dao: RepositorioDao,
-//    val adapter: ListaRepositoriosAdapter
 ) {
 
     private val repositoryImpl: RepositorioRepositoryImpl = RepositorioRepositoryImpl()
@@ -26,10 +24,6 @@ class RepositorioConsultive(
 
    suspend fun consultaApiGit(paginaAtual:Int): List<Repositorio> {
         return buscandoRepositorios(paginaAtual)
-
-//        adapter.atualiza(dao.buscaTodosRepositorios())
-//        dao.removeTodosRepositorios()
-//        adapter.atualiza(dao.buscaTodosRepositorios())
     }
 
    private suspend fun buscandoRepositorios(page: Int): List<Repositorio> {
@@ -41,31 +35,5 @@ class RepositorioConsultive(
 
      return fetchCurrencies
     }
-
-    fun addRepositorioNovo(
-        nomeRepositorio: String,
-        descricaoRepositorio: String,
-        nomeAutor: String,
-        fotoAutor: String,
-        numeroStars: String,
-        numeroForks: String
-    ) {
-
-        val repositoroNovo = Repositorio(
-            nomeRepositorio = nomeRepositorio,
-            descricaoRepositorio = descricaoRepositorio,
-            nomeAutor = nomeAutor,
-            fotoAutor = fotoAutor,
-            numeroStars = numeroStars,
-            numeroForks = numeroForks
-        )
-        dao.adicionaRepositorio(repositoroNovo)
-//        adapter.atualiza(dao.buscaTodosRepositorios())
-    }
-
-    fun formataString(text:String):String{
-        var textModified = text.substring(1, text.length -1)
-        return textModified
-   }
 
 }

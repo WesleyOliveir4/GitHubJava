@@ -25,7 +25,8 @@ class ResponseRepositorio() {
             nomeAutor = nomeAutor,
             fotoAutor = fotoAutor,
             numeroStars = numeroStars,
-            numeroForks = numeroForks
+            numeroForks = numeroForks,
+            owner = null
         )
         listaRepositorios.add(RepositorioNovo)
     }

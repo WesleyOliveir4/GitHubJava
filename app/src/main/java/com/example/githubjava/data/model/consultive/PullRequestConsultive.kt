@@ -4,6 +4,9 @@ import android.util.Log
 import com.example.githubjava.data.api.network.NetworkUtils
 import com.example.githubjava.data.dao.PullRequestDao
 import com.example.githubjava.data.models.PullRequests
+import com.example.githubjava.data.models.Repositorio
+import com.example.githubjava.data.repository.PullRequestRepositoryImpl
+import com.example.githubjava.data.repository.RepositorioRepositoryImpl
 import com.example.githubjava.data.request.EndpointPullRequest
 import com.example.githubjava.ui.adapter.ListaPullRequestsAdapter
 import com.google.gson.JsonArray
@@ -11,17 +14,23 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class PullRequestConsultive(
-    val dao: PullRequestDao,
-    val adapter: ListaPullRequestsAdapter
-) {
+class PullRequestConsultive() {
+
+    private val pullRequestRepositoryImpl: PullRequestRepositoryImpl = PullRequestRepositoryImpl()
+
+    suspend fun consultaPullRequest(
+        nomeCriador: String,
+        nomeRepositorio: String
+    ): MutableList<PullRequests> {
+        return pullRequestRepositoryImpl.fetchCurrencies(nomeCriador, nomeRepositorio)
+    }
 
     fun buscandoPullRequests(nomeCriador: String, nomeRepositorio: String) {
 
-        limpaObjectPull()
-
-        val retrofitClient = NetworkUtils.getRetrofitInstance("https://api.github.com/repos/")
-        val endpoint = retrofitClient.create(EndpointPullRequest::class.java)
+//        limpaObjectPull()
+//
+//        val retrofitClient = NetworkUtils.getRetrofitInstance("https://api.github.com/repos/")
+//        val endpoint = retrofitClient.create(EndpointPullRequest::class.java)
 
 //        endpoint.getCurrencies(nomeCriador, nomeRepositorio).enqueue(object : Callback<JsonArray> {
 //            override fun onResponse(call: Call<JsonArray>, response: Response<JsonArray>) {
@@ -65,27 +74,27 @@ class PullRequestConsultive(
 
     }
 
-    private fun limpaObjectPull() {
-        dao.removeTodosPullRequests()
-    }
+//    private fun limpaObjectPull() {
+//        dao.removeTodosPullRequests()
+//    }
 
-    private fun addPullRequest(
-        nomeAutor: String,
-        nomeTitulo: String,
-        dataPull: String,
-        bodyPull: String
-
-    ) {
-
-        val pullRequestNovo = PullRequests(
-            nomeAutorPullrequests = nomeAutor,
-            tituloPullRequests = nomeTitulo,
-            dataPullRequests = dataPull,
-            bodyPullRequest = bodyPull,
-        )
-        dao.adicionaPullRequest(pullRequestNovo)
-        adapter.atualiza(dao.buscaTodosPullRequests())
-    }
+//    private fun addPullRequest(
+//        nomeAutor: String,
+//        nomeTitulo: String,
+//        dataPull: String,
+//        bodyPull: String
+//
+//    ) {
+//
+//        val pullRequestNovo = PullRequests(
+//            nomeAutorPullrequests = nomeAutor,
+//            tituloPullRequests = nomeTitulo,
+//            dataPullRequests = dataPull,
+//            bodyPullRequest = bodyPull,
+//        )
+//        dao.adicionaPullRequest(pullRequestNovo)
+//        adapter.atualiza(dao.buscaTodosPullRequests())
+//    }
 
     private fun formataString(text: String): String {
         var textModified = text.substring(1, text.length - 1)
@@ -97,5 +106,20 @@ class PullRequestConsultive(
         textModified = textModified.substring(0, 10)
         return textModified
     }
+
+
+//    suspend fun consultaApiGit(paginaAtual:Int): List<Repositorio> {
+//        return buscandoRepositorios(paginaAtual)
+//    }
+//
+//    private suspend fun buscandoRepositorios(page: Int): List<Repositorio> {
+//        val fetchCurrencies = repositoryImpl.fetchCurrencies(page.toString())
+//        val page = page
+//        if (page < 1) {
+//            page == 1
+//        }
+//
+//        return fetchCurrencies
+//    }
 
 }

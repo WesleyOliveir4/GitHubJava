@@ -64,7 +64,7 @@ class HomeActivity : AppCompatActivity(), ListaRepositoriosAdapter.SelecionaRepo
 
         val intent = Intent(this, PullRequestActivity::class.java).apply {
 //            putExtra("repositorio.nomeAutor",repositorio.nomeAutor)
-            putExtra("repositorio.nomeAutor","repositorio.nomeAutor")
+            putExtra("repositorio.nomeAutor",repositorio.nomeAutor)
             putExtra("repositorio.nomeRepositorio",repositorio.nomeRepositorio)
         }
         startActivity(intent)

@@ -1,10 +1,16 @@
 package com.example.githubjava.presentation.pullRequest
 
 import android.os.Bundle
+import android.util.Log
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.example.githubjava.databinding.ActivityPullRequestBinding
+import com.example.githubjava.presentation.state.HomeState
+import com.example.githubjava.presentation.state.PullRequestState
 import com.example.githubjava.presentation.viewmodel.PullRequestViewModel
+import com.example.githubjava.ui.adapter.ListaPullRequestsAdapter
+import com.example.githubjava.ui.adapter.ListaRepositoriosAdapter
 
 class PullRequestActivity : AppCompatActivity() {
 
@@ -13,7 +19,7 @@ class PullRequestActivity : AppCompatActivity() {
     }
 
     private val pullRequestViewModel = PullRequestViewModel(this)
-
+    private var adapter = ListaPullRequestsAdapter(context = this, pullRequests = mutableListOf())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +37,17 @@ class PullRequestActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
         val recyclerView = binding.recyclerView
+
+        pullRequestViewModel.state.observe(this, Observer { state ->
+            when(state){
+                is PullRequestState.ShowItems -> {
+                    recyclerView.adapter = adapter
+                    adapter.atualiza(state.items)
+                    Log.d("stateHomeActivity", "${state.items[0].tituloPullRequests}")
+                }
+                else -> Log.d("stateHomeActivity", "retornou com erro")
+            }
+        })
 
         pullRequestViewModel.configuraRecyclerView(recyclerView)
         pullRequestViewModel.buscandoPullRequests(nomeCriadorSelecionado.toString(),nomeRepositorioSelecionado.toString())

@@ -1,10 +1,25 @@
 package com.example.githubjava.data.models
 
-class PullRequests (
+import com.google.gson.annotations.SerializedName
 
-    val nomeAutorPullrequests: String,
-    val tituloPullRequests: String,
-    val dataPullRequests: String,
-    val bodyPullRequest: String,
+data class PullRequests (
+    @SerializedName("login")
+    val nomeAutorPullrequests: String?,
+    @SerializedName("title")
+    val tituloPullRequests: String?,
+    @SerializedName("created_at")
+    val dataPullRequests: String?,
+    @SerializedName("body")
+    val bodyPullRequest: String?,
+
+    @SerializedName("user")
+    val user: User?
 
     )
+
+data class User(
+
+    @SerializedName("login")
+    val login: String?,
+
+)

@@ -6,6 +6,8 @@ import com.example.githubjava.data.mapper.ResponsePullRequest
 import com.example.githubjava.data.models.PullRequests
 import com.example.githubjava.data.request.EndpointPullRequest
 import com.google.gson.JsonArray
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -16,12 +18,11 @@ class PullRequestRepositoryImpl(
 
 
     override suspend fun fetchCurrencies(criador: String, repositorio: String): MutableList<PullRequests> {
-
-        val responsePullRequest: ResponsePullRequest = ResponsePullRequest()
-        val retrofitClient = NetworkUtils.getRetrofitInstance("https://api.github.com/repos/")
-        val endpoint = retrofitClient.create(EndpointPullRequest::class.java)
-       return endpoint.getCurrencies(criador, repositorio)
-
+        return withContext(Dispatchers.IO) {
+            val retrofitClient = NetworkUtils.getRetrofitInstance("https://api.github.com/repos/")
+            val endpoint = retrofitClient.create(EndpointPullRequest::class.java)
+            endpoint.getCurrencies(criador, repositorio).toPullRequest().toMutableList()
+        }
     }
 
 
@@ -35,5 +36,16 @@ class PullRequestRepositoryImpl(
         textModified = textModified.substring(0,10)
         return textModified
     }
+
+    private fun List<PullRequests>.toPullRequest() = map {
+        PullRequests(
+           nomeAutorPullrequests = it.user?.login?: "",
+           tituloPullRequests = it.tituloPullRequests?: "",
+           dataPullRequests = formataDataString(it.dataPullRequests?: ""),
+           bodyPullRequest = it.bodyPullRequest?: "",
+           user = it.user
+        )
+    }
+
 
 }

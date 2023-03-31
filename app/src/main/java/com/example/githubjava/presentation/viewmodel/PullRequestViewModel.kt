@@ -1,16 +1,20 @@
 package com.example.githubjava.presentation.viewmodel
 
 import android.util.Log
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import androidx.recyclerview.widget.RecyclerView
 import com.example.githubjava.data.request.EndpointPullRequest
 import com.example.githubjava.data.api.network.NetworkUtils
 import com.example.githubjava.data.dao.PullRequestDao
+import com.example.githubjava.data.model.consultive.PullRequestConsultive
 import com.example.githubjava.data.models.PullRequests
 import com.example.githubjava.data.repository.PullRequestRepositoryImpl
 import com.example.githubjava.presentation.pullRequest.PullRequestActivity
+import com.example.githubjava.presentation.state.HomeState
+import com.example.githubjava.presentation.state.PullRequestState
 import com.example.githubjava.ui.adapter.ListaPullRequestsAdapter
 import com.google.gson.JsonArray
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,10 +25,14 @@ class PullRequestViewModel(
 ) : ViewModel()
 {
 
-
     private var dao = PullRequestDao()
     private var adapter =
         ListaPullRequestsAdapter(context = pullRequestActivity, pullRequests = dao.buscaTodosPullRequests())
+
+    private val _state by lazy { MutableLiveData<PullRequestState>() }
+    val state: LiveData<PullRequestState> = _state
+
+    private val pullRequestConsultive : PullRequestConsultive = PullRequestConsultive()
 
     fun configuraRecyclerView(recyclerView: RecyclerView) {
         recyclerView.adapter = adapter
@@ -34,8 +42,14 @@ class PullRequestViewModel(
 //        val fetchCurrencies = repositoryImpl.fetchCurrencies(nomeCriador, nomeRepositorio)
 //        val retrofitClient = NetworkUtils.getRetrofitInstance("https://api.github.com/repos/")
 //        val endpoint = retrofitClient.create(EndpointPullRequest::class.java)
-
         dao.removeTodosPullRequests()
+        viewModelScope.launch {
+            val resultado = pullRequestConsultive.consultaPullRequest(nomeCriador,nomeRepositorio)
+            adapter.atualiza(dao.buscaTodosPullRequests())
+            _state.postValue(PullRequestState.ShowItems(resultado.toMutableList()))
+        }
+
+//        dao.removeTodosPullRequests()
         adapter.atualiza(dao.buscaTodosPullRequests())
 //        val listPullRequest = repositoryImpl.fetchCurrencies(nomeCriador, nomeRepositorio)
 
