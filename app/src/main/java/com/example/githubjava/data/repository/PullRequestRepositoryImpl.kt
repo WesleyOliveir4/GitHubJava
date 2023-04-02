@@ -32,12 +32,20 @@ class PullRequestRepositoryImpl(
     }
 
     fun formataDataString(dataText: String): String {
-        var textModified = dataText.substring(1, dataText.length - 1)
-        textModified = textModified.substring(0,10)
-        return textModified
+        var textModified = dataText.substring(0, dataText.length - 10)
+        return textModified.let{ data ->
+            val ano = data.substring(0,4)
+            val dia = data.substring(8,10)
+            val mes = data.substring(5,7)
+
+            val dataBr = "$dia/$mes/$ano"
+            dataBr
+        }
+
+
     }
 
-    private fun List<PullRequests>.toPullRequest() = map {
+    private fun MutableList<PullRequests>.toPullRequest() = map {
         PullRequests(
            nomeAutorPullrequests = it.user?.login?: "",
            tituloPullRequests = it.tituloPullRequests?: "",
