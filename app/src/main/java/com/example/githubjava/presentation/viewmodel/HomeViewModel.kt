@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.githubjava.data.request.EndpointRepositorios
 import com.example.githubjava.data.api.network.NetworkUtils
 import com.example.githubjava.data.dao.RepositorioDao
+import com.example.githubjava.data.dao.RepositorioDaoImpl
 import com.example.githubjava.data.models.Repositorio
 import com.example.githubjava.data.repository.PullRequestRepositoryImpl
 import com.example.githubjava.data.repository.RepositorioRepositoryImpl
@@ -38,7 +39,7 @@ class HomeViewModel(homeActivity: HomeActivity) : ViewModel() {
     private val repositorioConsultive: RepositorioConsultive = RepositorioConsultive()
 
     private val repositoryImpl: RepositorioRepositoryImpl = RepositorioRepositoryImpl()
-    private var dao = RepositorioDao()
+    private var dao = RepositorioDaoImpl()
     private var adapter = ListaRepositoriosAdapter(
         context = homeActivity,
         repositorios = dao.buscaTodosRepositorios(),
@@ -77,7 +78,7 @@ class HomeViewModel(homeActivity: HomeActivity) : ViewModel() {
 
     fun consultaApiGit() {
         buscandoRepositorios(paginaAtual)
-        adapter.atualiza(dao.buscaTodosRepositorios())
+//        adapter.atualiza(dao.buscaTodosRepositorios())
     }
 
     fun buscandoRepositorios(page: Int) {
