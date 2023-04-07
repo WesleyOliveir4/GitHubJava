@@ -78,7 +78,6 @@ class HomeViewModel(homeActivity: HomeActivity) : ViewModel() {
 
     fun consultaApiGit() {
         buscandoRepositorios(paginaAtual)
-//        adapter.atualiza(dao.buscaTodosRepositorios())
     }
 
     fun buscandoRepositorios(page: Int) {

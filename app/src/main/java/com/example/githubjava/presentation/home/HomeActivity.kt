@@ -63,7 +63,6 @@ class HomeActivity : AppCompatActivity(), ListaRepositoriosAdapter.SelecionaRepo
     override fun selecionaRepositorio(repositorio: Repositorio) {
 
         val intent = Intent(this, PullRequestActivity::class.java).apply {
-//            putExtra("repositorio.nomeAutor",repositorio.nomeAutor)
             putExtra("repositorio.nomeAutor",repositorio.nomeAutor)
             putExtra("repositorio.nomeRepositorio",repositorio.nomeRepositorio)
         }

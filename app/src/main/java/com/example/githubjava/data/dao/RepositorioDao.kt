@@ -10,5 +10,4 @@ interface RepositorioDao {
 
     fun removeTodosRepositorios()
 
-
 }

@@ -2,20 +2,12 @@ package com.example.githubjava.data.dao
 
 import com.example.githubjava.data.models.PullRequests
 
-class PullRequestDao {
-    fun adicionaPullRequest(pullRequest: PullRequests){
-        pullRequests.add(pullRequest)
-    }
+interface PullRequestDao {
 
-    fun buscaTodosPullRequests(): List<PullRequests>{
-        return pullRequests.toList()
-    }
+    fun adicionaPullRequest(pullRequest: PullRequests)
 
-    fun removeTodosPullRequests(){
-        pullRequests.clear()
-    }
+    fun buscaTodosPullRequests(): List<PullRequests>
 
-    companion object {
-        private val pullRequests = mutableListOf<PullRequests>()
-    }
+    fun removeTodosPullRequests()
+
 }
