@@ -17,6 +17,8 @@ import com.example.githubjava.data.models.Repositorio
 import com.example.githubjava.data.repository.PullRequestRepositoryImpl
 import com.example.githubjava.data.repository.RepositorioRepositoryImpl
 import com.example.githubjava.data.model.consultive.RepositorioConsultive
+import com.example.githubjava.data.repository.PullRequestRepository
+import com.example.githubjava.data.repository.RepositorioRepository
 import com.example.githubjava.presentation.home.HomeActivity
 import com.example.githubjava.presentation.state.HomeState
 import com.example.githubjava.ui.adapter.ListaRepositoriosAdapter
@@ -25,20 +27,24 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import org.koin.core.context.GlobalContext.get
+import org.koin.java.KoinJavaComponent
+import org.koin.java.KoinJavaComponent.inject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomeViewModel(homeActivity: HomeActivity) : ViewModel() {
+class HomeViewModel(
+    homeActivity: HomeActivity
+) : ViewModel() {
 
     private val _state by lazy { MutableLiveData<HomeState>() }
     val state: LiveData<HomeState> = _state
 
     private var paginaAtual: Int = 1
 
-    private val repositorioConsultive: RepositorioConsultive = RepositorioConsultive()
+    private val repositorioConsultive: RepositorioConsultive by inject(RepositorioConsultive::class.java)
 
-    private val repositoryImpl: RepositorioRepositoryImpl = RepositorioRepositoryImpl()
     private var dao = RepositorioDaoImpl()
     private var adapter = ListaRepositoriosAdapter(
         context = homeActivity,
@@ -65,6 +71,8 @@ class HomeViewModel(homeActivity: HomeActivity) : ViewModel() {
             } else {
                 return@OnClickListener
             }
+
+
         })
 
         btnSeguinte.setOnClickListener(View.OnClickListener {

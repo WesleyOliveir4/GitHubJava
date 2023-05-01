@@ -19,6 +19,7 @@ class PullRequestActivity : AppCompatActivity() {
     }
 
     private val pullRequestViewModel = PullRequestViewModel(this)
+
     private var adapter = ListaPullRequestsAdapter(context = this, pullRequests = mutableListOf())
 
     override fun onCreate(savedInstanceState: Bundle?) {

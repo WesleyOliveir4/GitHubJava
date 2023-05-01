@@ -9,6 +9,7 @@ import com.example.githubjava.data.dao.PullRequestDao
 import com.example.githubjava.data.dao.PullRequestDaoImpl
 import com.example.githubjava.data.model.consultive.PullRequestConsultive
 import com.example.githubjava.data.models.PullRequests
+import com.example.githubjava.data.repository.PullRequestRepository
 import com.example.githubjava.data.repository.PullRequestRepositoryImpl
 import com.example.githubjava.presentation.pullRequest.PullRequestActivity
 import com.example.githubjava.presentation.state.HomeState
@@ -16,13 +17,11 @@ import com.example.githubjava.presentation.state.PullRequestState
 import com.example.githubjava.ui.adapter.ListaPullRequestsAdapter
 import com.google.gson.JsonArray
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import org.koin.java.KoinJavaComponent.inject
+
 
 class PullRequestViewModel(
-    pullRequestActivity: PullRequestActivity,
-    private val repositoryImpl:PullRequestRepositoryImpl = PullRequestRepositoryImpl()
+    pullRequestActivity: PullRequestActivity
 ) : ViewModel()
 {
 
@@ -33,7 +32,7 @@ class PullRequestViewModel(
     private val _state by lazy { MutableLiveData<PullRequestState>() }
     val state: LiveData<PullRequestState> = _state
 
-    private val pullRequestConsultive : PullRequestConsultive = PullRequestConsultive()
+    private val pullRequestConsultive : PullRequestConsultive by inject(PullRequestConsultive::class.java)
 
     fun configuraRecyclerView(recyclerView: RecyclerView) {
         recyclerView.adapter = adapter

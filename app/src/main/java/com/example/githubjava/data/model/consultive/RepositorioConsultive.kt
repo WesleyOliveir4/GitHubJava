@@ -7,6 +7,7 @@ import com.example.githubjava.data.dao.RepositorioDaoImpl
 import com.example.githubjava.data.mapper.ResponseRepositorio
 import com.example.githubjava.data.models.Repositorio
 import com.example.githubjava.data.repository.PullRequestRepositoryImpl
+import com.example.githubjava.data.repository.RepositorioRepository
 import com.example.githubjava.data.repository.RepositorioRepositoryImpl
 import com.example.githubjava.data.request.EndpointRepositorios
 import com.example.githubjava.ui.adapter.ListaRepositoriosAdapter
@@ -16,11 +17,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class RepositorioConsultive(
-) {
+class RepositorioConsultive(val repositorioRepository: RepositorioRepository) {
 
-    private val repositoryImpl: RepositorioRepositoryImpl = RepositorioRepositoryImpl()
-    private val responseRepositorio: ResponseRepositorio = ResponseRepositorio()
     private val dao: RepositorioDao = RepositorioDaoImpl()
 
    suspend fun consultaApiGit(paginaAtual:Int): List<Repositorio> {
@@ -33,7 +31,7 @@ class RepositorioConsultive(
         if (page < 1) {
             page == 1
         }
-       val fetchCurrencies = repositoryImpl.fetchCurrencies(page.toString())
+       val fetchCurrencies = repositorioRepository.fetchCurrencies(page.toString())
        fetchCurrencies.map { repositorio ->
            dao.adicionaRepositorio(repositorio)
        }

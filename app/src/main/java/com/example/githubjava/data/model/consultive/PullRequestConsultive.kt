@@ -5,6 +5,7 @@ import com.example.githubjava.data.api.network.NetworkUtils
 import com.example.githubjava.data.dao.PullRequestDao
 import com.example.githubjava.data.models.PullRequests
 import com.example.githubjava.data.models.Repositorio
+import com.example.githubjava.data.repository.PullRequestRepository
 import com.example.githubjava.data.repository.PullRequestRepositoryImpl
 import com.example.githubjava.data.repository.RepositorioRepositoryImpl
 import com.example.githubjava.data.request.EndpointPullRequest
@@ -14,15 +15,13 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class PullRequestConsultive() {
-
-    private val pullRequestRepositoryImpl: PullRequestRepositoryImpl = PullRequestRepositoryImpl()
+class PullRequestConsultive(val pullRequestRepository: PullRequestRepository) {
 
     suspend fun consultaPullRequest(
         nomeCriador: String,
         nomeRepositorio: String
     ): MutableList<PullRequests> {
-        return pullRequestRepositoryImpl.fetchCurrencies(nomeCriador, nomeRepositorio)
+        return pullRequestRepository.fetchCurrencies(nomeCriador, nomeRepositorio)
     }
 
 

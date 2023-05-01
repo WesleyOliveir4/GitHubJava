@@ -22,6 +22,7 @@ class HomeActivity : AppCompatActivity(), ListaRepositoriosAdapter.SelecionaRepo
     }
 
     private val homeViewModel = HomeViewModel(this)
+
     private var adapter = ListaRepositoriosAdapter(context = this, repositorios = mutableListOf(), this )
 
     override fun onCreate(savedInstanceState: Bundle?) {
