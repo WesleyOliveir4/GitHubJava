@@ -1,6 +1,5 @@
-package com.example.githubjava.presentation.viewmodel
+package com.example.githubjava.presentation.home.viewmodel
 
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -9,30 +8,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.RecyclerView
-import com.example.githubjava.data.request.EndpointRepositorios
-import com.example.githubjava.data.api.network.NetworkUtils
-import com.example.githubjava.data.dao.RepositorioDao
 import com.example.githubjava.data.dao.RepositorioDaoImpl
-import com.example.githubjava.data.models.Repositorio
-import com.example.githubjava.data.repository.PullRequestRepositoryImpl
-import com.example.githubjava.data.repository.RepositorioRepositoryImpl
 import com.example.githubjava.data.model.consultive.RepositorioConsultive
-import com.example.githubjava.data.repository.PullRequestRepository
-import com.example.githubjava.data.repository.RepositorioRepository
 import com.example.githubjava.presentation.home.HomeActivity
-import com.example.githubjava.presentation.state.HomeState
+import com.example.githubjava.presentation.home.state.HomeState
 import com.example.githubjava.ui.adapter.ListaRepositoriosAdapter
-import com.google.gson.JsonObject
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import org.koin.core.context.GlobalContext.get
-import org.koin.java.KoinJavaComponent
 import org.koin.java.KoinJavaComponent.inject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class HomeViewModel(
     homeActivity: HomeActivity

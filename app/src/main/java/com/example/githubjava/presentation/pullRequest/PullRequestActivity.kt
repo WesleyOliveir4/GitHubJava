@@ -6,11 +6,9 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.githubjava.databinding.ActivityPullRequestBinding
-import com.example.githubjava.presentation.state.HomeState
-import com.example.githubjava.presentation.state.PullRequestState
-import com.example.githubjava.presentation.viewmodel.PullRequestViewModel
+import com.example.githubjava.presentation.pullRequest.state.PullRequestState
+import com.example.githubjava.presentation.pullRequest.viewmodel.PullRequestViewModel
 import com.example.githubjava.ui.adapter.ListaPullRequestsAdapter
-import com.example.githubjava.ui.adapter.ListaRepositoriosAdapter
 
 class PullRequestActivity : AppCompatActivity() {
 

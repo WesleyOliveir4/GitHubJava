@@ -8,9 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.githubjava.databinding.ActivityHomeBinding
 import com.example.githubjava.data.models.Repositorio
+import com.example.githubjava.presentation.home.state.HomeState
+import com.example.githubjava.presentation.home.viewmodel.HomeViewModel
 import com.example.githubjava.presentation.pullRequest.PullRequestActivity
-import com.example.githubjava.presentation.state.HomeState
-import com.example.githubjava.presentation.viewmodel.HomeViewModel
 import com.example.githubjava.ui.adapter.ListaRepositoriosAdapter
 
 
