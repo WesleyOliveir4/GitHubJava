@@ -22,9 +22,9 @@ class HomeViewModel(
 
     private val _state by lazy { MutableLiveData<HomeState>() }
     val state: LiveData<HomeState> = _state
-
-    private var paginaAtual: Int = 1
-
+    companion object {
+        private var paginaAtual: Int = 1
+    }
     private val repositorioConsultive: RepositorioConsultive by inject(RepositorioConsultive::class.java)
 
     private var dao = RepositorioDaoImpl()
