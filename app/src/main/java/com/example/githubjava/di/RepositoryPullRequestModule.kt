@@ -7,7 +7,7 @@ import org.koin.dsl.module
 val repositoryPullRequestModule= module {
 
 
-    single<PullRequestRepository>  {
+    factory<PullRequestRepository>  {
         PullRequestRepositoryImpl()
     }
 

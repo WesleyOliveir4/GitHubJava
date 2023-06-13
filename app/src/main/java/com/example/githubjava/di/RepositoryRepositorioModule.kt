@@ -9,7 +9,7 @@ import org.koin.dsl.module
 val repositoryRepositorioModule= module {
 
 
-    single<RepositorioRepository>  {
+    factory<RepositorioRepository>  {
         RepositorioRepositoryImpl()
     }
 
