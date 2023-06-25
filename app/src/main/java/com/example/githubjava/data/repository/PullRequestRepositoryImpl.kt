@@ -24,14 +24,9 @@ class PullRequestRepositoryImpl(
             endpoint.getCurrencies(criador, repositorio).toPullRequest().toMutableList()
         }
     }
+    
 
-
-    fun formataString(text: String): String {
-        val textModified = text.substring(1, text.length - 1)
-        return textModified
-    }
-
-    fun formataDataString(dataText: String): String {
+    private fun formataDataString(dataText: String): String {
         var textModified = dataText.substring(0, dataText.length - 10)
         return textModified.let{ data ->
             val ano = data.substring(0,4)
