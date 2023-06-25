@@ -6,6 +6,8 @@ import com.example.githubjava.data.mapper.ResponsePullRequest
 import com.example.githubjava.data.models.PullRequests
 import com.example.githubjava.data.request.EndpointPullRequest
 import com.google.gson.JsonArray
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -15,60 +17,38 @@ class PullRequestRepositoryImpl(
 ) : PullRequestRepository {
 
 
-    override fun fetchCurrencies(criador: String, repositorio: String): MutableList<PullRequests> {
+    override suspend fun fetchCurrencies(criador: String, repositorio: String): MutableList<PullRequests> {
+        return withContext(Dispatchers.IO) {
+            val retrofitClient = NetworkUtils.getRetrofitInstance("https://api.github.com/repos/")
+            val endpoint = retrofitClient.create(EndpointPullRequest::class.java)
+            endpoint.getCurrencies(criador, repositorio).toPullRequest().toMutableList()
+        }
+    }
+    
 
-        val responsePullRequest: ResponsePullRequest = ResponsePullRequest()
-        val retrofitClient = NetworkUtils.getRetrofitInstance("https://api.github.com/repos/")
-        val endpoint = retrofitClient.create(EndpointPullRequest::class.java)
-        val currencies = endpoint.getCurrencies(criador, repositorio)
+    private fun formataDataString(dataText: String): String {
+        var textModified = dataText.substring(0, dataText.length - 10)
+        return textModified.let{ data ->
+            val ano = data.substring(0,4)
+            val dia = data.substring(8,10)
+            val mes = data.substring(5,7)
 
-       currencies.enqueue(object : Callback<JsonArray> {
-            override fun onResponse(call: Call<JsonArray>, response: Response<JsonArray>) {
-                var i: Int = 1
+            val dataBr = "$dia/$mes/$ano"
+            dataBr
+        }
 
-
-                val objeto = response.body()?.asJsonArray
-
-                try {
-                    objeto?.asJsonArray?.forEach {
-                        val getUsers = objeto?.asJsonArray?.get(i)
-                        val getUser = getUsers?.asJsonObject?.get("user")
-
-                        responsePullRequest.addPullRequest(
-                            nomeAutor =formataString(getUser?.asJsonObject?.get("login").toString()) ,
-                            nomeTitulo = formataString(getUsers?.asJsonObject?.get("title").toString()),
-                            dataPull = formataDataString(getUsers?.asJsonObject?.get("created_at").toString()),
-                            bodyPull = formataString(getUsers?.asJsonObject?.get("body").toString()),
-                        )
-
-                        i++
-                    }
-
-                } catch (e: Exception) {
-                    Log.d("Erro ao pesquisar repo", i.toString() + e.toString())
-                }
-            }
-
-            override fun onFailure(call: Call<JsonArray>, t: Throwable) {
-                Log.d("Erro ao pesquisar repo", t.toString())
-            }
-
-        })
-
-        return responsePullRequest.fetchListPullRequest()
 
     }
 
-
-    fun formataString(text: String): String {
-        val textModified = text.substring(1, text.length - 1)
-        return textModified
+    private fun MutableList<PullRequests>.toPullRequest() = map {
+        PullRequests(
+           nomeAutorPullrequests = it.user?.login?: "",
+           tituloPullRequests = it.tituloPullRequests?: "",
+           dataPullRequests = formataDataString(it.dataPullRequests?: ""),
+           bodyPullRequest = it.bodyPullRequest?: "",
+           user = it.user
+        )
     }
 
-    fun formataDataString(dataText: String): String {
-        var textModified = dataText.substring(1, dataText.length - 1)
-        textModified = textModified.substring(0,10)
-        return textModified
-    }
 
 }
