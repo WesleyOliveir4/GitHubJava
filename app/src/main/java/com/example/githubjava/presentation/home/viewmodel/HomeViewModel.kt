@@ -72,26 +72,23 @@ class HomeViewModel(
         buscandoRepositorios(paginaAtual)
     }
 
-    override fun consultaApiGit(paginaAtual: Int): List<Repositorio> {
+    override suspend fun consultaRepositorio(paginaAtual: Int): List<Repositorio> {
         val page = paginaAtual
         if (page < 1) {
             page == 1
         }
-        viewModelScope.launch {
         val fetchCurrencies = repositorioRepository.fetchCurrencies(page.toString())
         fetchCurrencies.map { repositorio ->
             dao.adicionaRepositorio(repositorio)
         }
             return fetchCurrencies
-        }
-
 
     }
 
 
     fun buscandoRepositorios(page: Int) {
         viewModelScope.launch {
-            val resultado = consultaApiGit(page)
+            val resultado = consultaRepositorio(page)
             adapter.atualiza(dao.buscaTodosRepositorios())
             _state.postValue(HomeState.ShowItems(resultado.toMutableList()))
         }

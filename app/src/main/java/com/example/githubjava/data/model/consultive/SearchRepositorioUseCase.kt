@@ -4,8 +4,6 @@ import com.example.githubjava.data.models.Repositorio
 
 interface SearchRepositorioUseCase {
 
-   fun consultaApiGit(paginaAtual:Int): List<Repositorio>
-
-//    fun buscandoRepositorios(pageReceived: Int): List<Repositorio>
+   suspend fun consultaRepositorio(paginaAtual:Int): List<Repositorio>
 
 }

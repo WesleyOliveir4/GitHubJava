@@ -24,7 +24,7 @@ class RepositorioRepositoryImpl() :RepositorioRepository {
     private fun List<Repositorio>.toItemJava() = map {
         Repositorio(
             nomeRepositorio = it.nomeRepositorio ?: "",
-            descricaoRepositorio = it.descricaoRepositorio,
+            descricaoRepositorio = it.descricaoRepositorio?: "",
             nomeAutor =  it.owner?.login ?: "",
             fotoAutor = it.owner?.avatarUrl ?: "",
             numeroStars = it.numeroForks.toString(),
