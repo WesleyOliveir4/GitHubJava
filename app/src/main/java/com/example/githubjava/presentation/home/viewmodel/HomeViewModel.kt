@@ -9,7 +9,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.RecyclerView
 import com.example.githubjava.data.dao.RepositorioDaoImpl
-import com.example.githubjava.data.model.consultive.RepositorioConsultive
+import com.example.githubjava.data.model.consultive.SearchRepositorioUseCase
+import com.example.githubjava.data.models.Repositorio
+import com.example.githubjava.data.repository.RepositorioRepository
 import com.example.githubjava.presentation.home.HomeActivity
 import com.example.githubjava.presentation.home.state.HomeState
 import com.example.githubjava.ui.adapter.ListaRepositoriosAdapter
@@ -18,14 +20,14 @@ import org.koin.java.KoinJavaComponent.inject
 
 class HomeViewModel(
     homeActivity: HomeActivity
-) : ViewModel() {
+) : ViewModel(), SearchRepositorioUseCase {
 
     private val _state by lazy { MutableLiveData<HomeState>() }
     val state: LiveData<HomeState> = _state
     companion object {
         private var paginaAtual: Int = 1
     }
-    private val repositorioConsultive: RepositorioConsultive by inject(RepositorioConsultive::class.java)
+    private val repositorioRepository: RepositorioRepository by inject(RepositorioRepository::class.java)
 
     private var dao = RepositorioDaoImpl()
     private var adapter = ListaRepositoriosAdapter(
@@ -70,9 +72,26 @@ class HomeViewModel(
         buscandoRepositorios(paginaAtual)
     }
 
+    override fun consultaApiGit(paginaAtual: Int): List<Repositorio> {
+        val page = paginaAtual
+        if (page < 1) {
+            page == 1
+        }
+        viewModelScope.launch {
+        val fetchCurrencies = repositorioRepository.fetchCurrencies(page.toString())
+        fetchCurrencies.map { repositorio ->
+            dao.adicionaRepositorio(repositorio)
+        }
+            return fetchCurrencies
+        }
+
+
+    }
+
+
     fun buscandoRepositorios(page: Int) {
         viewModelScope.launch {
-            val resultado = repositorioConsultive.consultaApiGit(page)
+            val resultado = consultaApiGit(page)
             adapter.atualiza(dao.buscaTodosRepositorios())
             _state.postValue(HomeState.ShowItems(resultado.toMutableList()))
         }

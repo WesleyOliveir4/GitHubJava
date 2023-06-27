@@ -3,7 +3,9 @@ package com.example.githubjava.presentation.pullRequest.viewmodel
 import androidx.lifecycle.*
 import androidx.recyclerview.widget.RecyclerView
 import com.example.githubjava.data.dao.PullRequestDaoImpl
-import com.example.githubjava.data.model.consultive.PullRequestConsultive
+import com.example.githubjava.data.model.consultive.SearchPullRequestUseCase
+import com.example.githubjava.data.models.PullRequests
+import com.example.githubjava.data.repository.PullRequestRepository
 import com.example.githubjava.presentation.pullRequest.PullRequestActivity
 import com.example.githubjava.presentation.pullRequest.state.PullRequestState
 import com.example.githubjava.ui.adapter.ListaPullRequestsAdapter
@@ -13,7 +15,7 @@ import org.koin.java.KoinJavaComponent.inject
 
 class PullRequestViewModel(
     pullRequestActivity: PullRequestActivity
-) : ViewModel()
+) : ViewModel(), SearchPullRequestUseCase
 {
 
     private var dao = PullRequestDaoImpl()
@@ -23,7 +25,7 @@ class PullRequestViewModel(
     private val _state by lazy { MutableLiveData<PullRequestState>() }
     val state: LiveData<PullRequestState> = _state
 
-    private val pullRequestConsultive : PullRequestConsultive by inject(PullRequestConsultive::class.java)
+    private val pullRequestRepository : PullRequestRepository by inject(PullRequestRepository::class.java)
 
     fun configuraRecyclerView(recyclerView: RecyclerView) {
         recyclerView.adapter = adapter
@@ -32,13 +34,20 @@ class PullRequestViewModel(
 
         dao.removeTodosPullRequests()
         viewModelScope.launch {
-            val resultado = pullRequestConsultive.consultaPullRequest(nomeCriador,nomeRepositorio)
+            val resultado = consultaPullRequest(nomeCriador,nomeRepositorio)
             adapter.atualiza(dao.buscaTodosPullRequests())
             _state.postValue(PullRequestState.ShowItems(resultado.toMutableList()))
         }
 
         adapter.atualiza(dao.buscaTodosPullRequests())
 
+    }
+
+    override suspend fun consultaPullRequest(
+        nomeCriador: String,
+        nomeRepositorio: String
+    ): MutableList<PullRequests> {
+        return pullRequestRepository.fetchCurrencies(nomeCriador, nomeRepositorio)
     }
 
 }
