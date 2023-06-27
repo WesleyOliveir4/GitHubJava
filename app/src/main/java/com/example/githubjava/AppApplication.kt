@@ -14,7 +14,6 @@ class AppApplication : Application() {
                 repositoryRepositorioModule,
                 repositoryPullRequestModule,
                 repositorioConsultiveModule,
-                pullRequestConsultiveModule
 
             )
         }
