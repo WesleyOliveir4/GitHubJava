@@ -9,19 +9,20 @@ import androidx.lifecycle.Observer
 import com.example.githubjava.databinding.ActivityHomeBinding
 import com.example.githubjava.data.models.Repositorio
 import com.example.githubjava.presentation.home.state.HomeState
-import com.example.githubjava.presentation.home.viewmodel.HomeViewModel
+import com.example.githubjava.presentation.home.viewmodel.RepositorioViewModel
 import com.example.githubjava.presentation.pullRequest.PullRequestActivity
 import com.example.githubjava.ui.adapter.ListaRepositoriosAdapter
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-
-class HomeActivity : AppCompatActivity(), ListaRepositoriosAdapter.SelecionaRepositorio {
+class RepositorioActivity : AppCompatActivity(), ListaRepositoriosAdapter.SelecionaRepositorio {
 
     private val binding by lazy {
         ActivityHomeBinding.inflate(layoutInflater)
     }
 
-    private val homeViewModel = HomeViewModel(this)
+//   private val repositorioViewModel = RepositorioViewModel(this)
+    private val repositorioViewModel : RepositorioViewModel by viewModel()
 
     private var adapter = ListaRepositoriosAdapter(context = this, repositorios = mutableListOf(), this )
 
@@ -29,22 +30,17 @@ class HomeActivity : AppCompatActivity(), ListaRepositoriosAdapter.SelecionaRepo
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-
     }
 
     override fun onResume() {
         super.onResume()
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
 
         val recyclerView = binding.recyclerView
         val btnAnterior = binding.btnAnterior
         val btnSeguinte = binding.btnSeguinte
         val tvNumeroPagina = binding.tvNumeroPagina
 
-        homeViewModel.state.observe(this, Observer { state ->
+        repositorioViewModel.state.observe(this, Observer { state ->
             when(state){
                 is HomeState.ShowItems -> {
                     recyclerView.adapter = adapter
@@ -55,9 +51,9 @@ class HomeActivity : AppCompatActivity(), ListaRepositoriosAdapter.SelecionaRepo
             }
         })
 
-        homeViewModel.configuraRecyclerView(recyclerView)
-        homeViewModel.configuraPaginacao(btnAnterior, btnSeguinte, tvNumeroPagina)
-        homeViewModel.consultaApiGit()
+        repositorioViewModel.configuraRecyclerView(recyclerView)
+        repositorioViewModel.configuraPaginacao(btnAnterior, btnSeguinte, tvNumeroPagina)
+        repositorioViewModel.consultaApiGit()
 
     }
 

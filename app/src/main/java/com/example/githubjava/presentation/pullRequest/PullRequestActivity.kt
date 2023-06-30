@@ -31,10 +31,6 @@ class PullRequestActivity : AppCompatActivity() {
         val nomeCriadorSelecionado = intent?.getStringExtra("repositorio.nomeAutor")
         val nomeRepositorioSelecionado = intent?.getStringExtra("repositorio.nomeRepositorio")
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
         val recyclerView = binding.recyclerView
 
         pullRequestViewModel.state.observe(this, Observer { state ->
