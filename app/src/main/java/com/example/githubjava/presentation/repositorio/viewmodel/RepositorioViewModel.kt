@@ -1,4 +1,4 @@
-package com.example.githubjava.presentation.home.viewmodel
+package com.example.githubjava.presentation.repositorio.viewmodel
 
 import android.view.View
 import android.widget.Button
@@ -12,8 +12,8 @@ import com.example.githubjava.data.dao.RepositorioDaoImpl
 import com.example.githubjava.data.model.consultive.SearchRepositorioUseCase
 import com.example.githubjava.data.models.Repositorio
 import com.example.githubjava.data.repository.RepositorioRepository
-import com.example.githubjava.presentation.home.RepositorioActivity
-import com.example.githubjava.presentation.home.state.HomeState
+import com.example.githubjava.presentation.repositorio.RepositorioActivity
+import com.example.githubjava.presentation.repositorio.state.HomeState
 import com.example.githubjava.ui.adapter.ListaRepositoriosAdapter
 import kotlinx.coroutines.launch
 import org.koin.java.KoinJavaComponent.inject

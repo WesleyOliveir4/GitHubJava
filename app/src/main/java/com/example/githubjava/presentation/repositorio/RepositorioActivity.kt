@@ -1,18 +1,16 @@
-package com.example.githubjava.presentation.home
+package com.example.githubjava.presentation.repositorio
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.githubjava.databinding.ActivityHomeBinding
 import com.example.githubjava.data.models.Repositorio
-import com.example.githubjava.presentation.home.state.HomeState
-import com.example.githubjava.presentation.home.viewmodel.RepositorioViewModel
+import com.example.githubjava.presentation.repositorio.state.HomeState
+import com.example.githubjava.presentation.repositorio.viewmodel.RepositorioViewModel
 import com.example.githubjava.presentation.pullRequest.PullRequestActivity
 import com.example.githubjava.ui.adapter.ListaRepositoriosAdapter
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class RepositorioActivity : AppCompatActivity(), ListaRepositoriosAdapter.SelecionaRepositorio {
