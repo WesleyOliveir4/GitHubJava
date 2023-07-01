@@ -18,13 +18,13 @@
         <activity
             android:name=".presentation.pullRequest.PullRequestActivity"
             android:exported="false"
-            android:parentActivityName=".presentation.home.RepositorioActivity">
+            android:parentActivityName=".presentation.repositorio.RepositorioActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".presentation.home.RepositorioActivity"
+            android:name=".presentation.repositorio.RepositorioActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
