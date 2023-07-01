@@ -21,8 +21,8 @@ class RepositorioActivity : AppCompatActivity(), ListaRepositoriosAdapter.Seleci
         ActivityHomeBinding.inflate(layoutInflater)
     }
 
-//   private val repositorioViewModel = RepositorioViewModel(this)
-    private val repositorioViewModel : RepositorioViewModel by viewModel()
+   private val repositorioViewModel = RepositorioViewModel(this)
+//    private val repositorioViewModel : RepositorioViewModel by viewModel()
 
     private var adapter = ListaRepositoriosAdapter(context = this, repositorios = mutableListOf(), this )
 
