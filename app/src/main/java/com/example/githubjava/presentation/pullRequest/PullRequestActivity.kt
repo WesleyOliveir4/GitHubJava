@@ -9,6 +9,7 @@ import com.example.githubjava.databinding.ActivityPullRequestBinding
 import com.example.githubjava.presentation.pullRequest.state.PullRequestState
 import com.example.githubjava.presentation.pullRequest.viewmodel.PullRequestViewModel
 import com.example.githubjava.ui.adapter.ListaPullRequestsAdapter
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PullRequestActivity : AppCompatActivity() {
 
@@ -16,7 +17,8 @@ class PullRequestActivity : AppCompatActivity() {
         ActivityPullRequestBinding.inflate(layoutInflater)
     }
 
-    private val pullRequestViewModel = PullRequestViewModel(this)
+//    private val pullRequestViewModel = PullRequestViewModel(this)
+    private val pullRequestViewModel: PullRequestViewModel by viewModel()
 
     private var adapter = ListaPullRequestsAdapter(context = this, pullRequests = mutableListOf())
 
@@ -31,10 +33,6 @@ class PullRequestActivity : AppCompatActivity() {
         val nomeCriadorSelecionado = intent?.getStringExtra("repositorio.nomeAutor")
         val nomeRepositorioSelecionado = intent?.getStringExtra("repositorio.nomeRepositorio")
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
         val recyclerView = binding.recyclerView
 
         pullRequestViewModel.state.observe(this, Observer { state ->

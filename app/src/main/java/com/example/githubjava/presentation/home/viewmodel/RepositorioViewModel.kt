@@ -12,14 +12,14 @@ import com.example.githubjava.data.dao.RepositorioDaoImpl
 import com.example.githubjava.data.model.consultive.SearchRepositorioUseCase
 import com.example.githubjava.data.models.Repositorio
 import com.example.githubjava.data.repository.RepositorioRepository
-import com.example.githubjava.presentation.home.HomeActivity
+import com.example.githubjava.presentation.home.RepositorioActivity
 import com.example.githubjava.presentation.home.state.HomeState
 import com.example.githubjava.ui.adapter.ListaRepositoriosAdapter
 import kotlinx.coroutines.launch
 import org.koin.java.KoinJavaComponent.inject
 
-class HomeViewModel(
-    homeActivity: HomeActivity
+class RepositorioViewModel(
+    repositorioActivity: RepositorioActivity
 ) : ViewModel(), SearchRepositorioUseCase {
 
     private val _state by lazy { MutableLiveData<HomeState>() }
@@ -31,9 +31,9 @@ class HomeViewModel(
 
     private var dao = RepositorioDaoImpl()
     private var adapter = ListaRepositoriosAdapter(
-        context = homeActivity,
+        context = repositorioActivity,
         repositorios = dao.buscaTodosRepositorios(),
-        selecionaRepositorio = homeActivity
+        selecionaRepositorio = repositorioActivity
     )
 
 

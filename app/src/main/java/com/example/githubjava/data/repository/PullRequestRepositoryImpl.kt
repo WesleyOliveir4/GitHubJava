@@ -1,6 +1,7 @@
 package com.example.githubjava.data.repository
 
 import android.util.Log
+import com.example.githubjava.BuildConfig
 import com.example.githubjava.data.api.network.NetworkUtils
 import com.example.githubjava.data.mapper.ResponsePullRequest
 import com.example.githubjava.data.models.PullRequests
@@ -16,10 +17,10 @@ import retrofit2.Retrofit
 class PullRequestRepositoryImpl(
 ) : PullRequestRepository {
 
-
+    val PullRequestsPath = BuildConfig.PullRequestsPath
     override suspend fun fetchCurrencies(criador: String, repositorio: String): MutableList<PullRequests> {
         return withContext(Dispatchers.IO) {
-            val retrofitClient = NetworkUtils.getRetrofitInstance("https://api.github.com/repos/")
+            val retrofitClient = NetworkUtils.getRetrofitInstance(PullRequestsPath)
             val endpoint = retrofitClient.create(EndpointPullRequest::class.java)
             endpoint.getCurrencies(criador, repositorio).toPullRequest().toMutableList()
         }
