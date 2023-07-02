@@ -35,11 +35,11 @@ class PullRequestViewModel(
         dao.removeTodosPullRequests()
         viewModelScope.launch {
             val resultado = consultaPullRequest(nomeCriador,nomeRepositorio)
-            adapter.atualiza(dao.buscaTodosPullRequests())
+            adapter.submitList(dao.buscaTodosPullRequests())
             _state.postValue(PullRequestState.ShowItems(resultado.toMutableList()))
         }
 
-        adapter.atualiza(dao.buscaTodosPullRequests())
+        adapter.submitList(dao.buscaTodosPullRequests())
 
     }
 
