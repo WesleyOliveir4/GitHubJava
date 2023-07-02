@@ -39,7 +39,7 @@ class PullRequestActivity : AppCompatActivity() {
             when(state){
                 is PullRequestState.ShowItems -> {
                     recyclerView.adapter = adapter
-                    adapter.atualiza(state.items)
+                    adapter.submitList(state.items)
                     Log.d("stateHomeActivity", "${state.items[0].tituloPullRequests}")
                 }
                 else -> Log.d("stateHomeActivity", "retornou com erro")
