@@ -51,7 +51,7 @@ class RepositorioViewModel(
                 tvNumeroPagina.text = paginaAtual.toString()
                 consultaApiGit()
                 dao.removeTodosRepositorios()
-                adapter.atualiza(dao.buscaTodosRepositorios())
+                adapter.submitList(dao.buscaTodosRepositorios())
             } else {
                 return@OnClickListener
             }
@@ -64,7 +64,7 @@ class RepositorioViewModel(
             tvNumeroPagina.text = paginaAtual.toString()
             consultaApiGit()
             dao.removeTodosRepositorios()
-            adapter.atualiza(dao.buscaTodosRepositorios())
+            adapter.submitList(dao.buscaTodosRepositorios())
         })
     }
 
@@ -89,7 +89,7 @@ class RepositorioViewModel(
     fun buscandoRepositorios(page: Int) {
         viewModelScope.launch {
             val resultado = consultaRepositorio(page)
-            adapter.atualiza(dao.buscaTodosRepositorios())
+            adapter.submitList(dao.buscaTodosRepositorios())
             _state.postValue(HomeState.ShowItems(resultado.toMutableList()))
         }
     }

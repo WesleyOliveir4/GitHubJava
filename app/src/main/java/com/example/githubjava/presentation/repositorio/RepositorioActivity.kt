@@ -42,7 +42,7 @@ class RepositorioActivity : AppCompatActivity(), ListaRepositoriosAdapter.Seleci
             when(state){
                 is HomeState.ShowItems -> {
                     recyclerView.adapter = adapter
-                    adapter.atualiza(state.items)
+                    adapter.submitList(state.items)
                     Log.d("stateHomeActivity", "${state.items[0].nomeRepositorio}")
                 }
                 else -> Log.d("stateHomeActivity", "retornou com erro")

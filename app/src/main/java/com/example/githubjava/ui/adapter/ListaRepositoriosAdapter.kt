@@ -4,16 +4,19 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.githubjava.databinding.RepositorioItemBinding
 import com.example.githubjava.data.extensoes.CarregaImagem
+import com.example.githubjava.data.models.PullRequests
 import com.example.githubjava.data.models.Repositorio
 
 class ListaRepositoriosAdapter(
     private val context: Context,
     repositorios: List<Repositorio>,
     var selecionaRepositorio: SelecionaRepositorio
-): RecyclerView.Adapter<ListaRepositoriosAdapter.ViewHolder>() {
+):  ListAdapter<Repositorio,ListaRepositoriosAdapter.ViewHolder>(DiffUtilCallBack) {
 
     private val repositorios = repositorios.toMutableList()
     interface SelecionaRepositorio{
@@ -46,7 +49,7 @@ class ListaRepositoriosAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val repositorio = repositorios[position]
+        val repositorio = getItem(position)
         holder.vincula(repositorio)
 
         holder.cardView.setOnClickListener(View.OnClickListener {
@@ -54,14 +57,23 @@ class ListaRepositoriosAdapter(
         })
     }
 
-    override fun getItemCount(): Int = repositorios.size
-    fun atualiza(repositorios: List<Repositorio>) {
-        notifyDataSetChanged()
-        this.repositorios.clear()
-        this.repositorios.addAll(repositorios)
+//    override fun getItemCount(): Int = repositorios.size
+//    fun atualiza(repositorios: List<Repositorio>) {
+//        notifyDataSetChanged()
+//        this.repositorios.clear()
+//        this.repositorios.addAll(repositorios)
+//
+//    }
+
+    private object DiffUtilCallBack : DiffUtil.ItemCallback<Repositorio>(){
+        override fun areItemsTheSame(oldItem: Repositorio, newItem: Repositorio): Boolean {
+            return oldItem.descricaoRepositorio == newItem.descricaoRepositorio
+        }
+
+        override fun areContentsTheSame(oldItem: Repositorio, newItem: Repositorio): Boolean {
+            return oldItem == newItem
+        }
 
     }
-
-
 
 }
