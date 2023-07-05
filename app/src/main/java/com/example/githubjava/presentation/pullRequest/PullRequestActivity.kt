@@ -46,7 +46,6 @@ class PullRequestActivity : AppCompatActivity() {
             }
         })
 
-        pullRequestViewModel.configuraRecyclerView(recyclerView)
         pullRequestViewModel.buscandoPullRequests(nomeCriadorSelecionado.toString(),nomeRepositorioSelecionado.toString())
     }
 

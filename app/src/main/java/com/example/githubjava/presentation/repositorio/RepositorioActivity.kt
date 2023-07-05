@@ -20,6 +20,10 @@ class RepositorioActivity : AppCompatActivity(), ListaRepositoriosAdapter.Seleci
     }
 
    private val repositorioViewModel = RepositorioViewModel(this)
+
+    /**
+     * Problema para criar um by viewModel() para o RepositorioActivity
+     */
 //    private val repositorioViewModel : RepositorioViewModel by viewModel()
 
     private var adapter = ListaRepositoriosAdapter(context = this, repositorios = mutableListOf(), this )
