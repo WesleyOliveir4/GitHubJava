@@ -12,6 +12,6 @@ val pullRequestViewModelModule = module {
         PullRequestActivity()
     }
 
-    viewModel { PullRequestViewModel(pullRequestActivity = get()) }
+    viewModel { PullRequestViewModel() }
 
 }
