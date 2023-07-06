@@ -19,7 +19,7 @@ class RepositorioActivity : AppCompatActivity(), ListaRepositoriosAdapter.Seleci
         ActivityHomeBinding.inflate(layoutInflater)
     }
 
-   private val repositorioViewModel = RepositorioViewModel(this)
+   private val repositorioViewModel = RepositorioViewModel()
 
     /**
      * Problema para criar um by viewModel() para o RepositorioActivity
@@ -53,7 +53,6 @@ class RepositorioActivity : AppCompatActivity(), ListaRepositoriosAdapter.Seleci
             }
         })
 
-        repositorioViewModel.configuraRecyclerView(recyclerView)
         repositorioViewModel.configuraPaginacao(btnAnterior, btnSeguinte, tvNumeroPagina)
         repositorioViewModel.consultaApiGit()
 

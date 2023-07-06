@@ -1,18 +1,11 @@
 package com.example.githubjava.data.repository
 
-import android.util.Log
 import com.example.githubjava.BuildConfig
 import com.example.githubjava.data.api.network.NetworkUtils
-import com.example.githubjava.data.mapper.ResponsePullRequest
 import com.example.githubjava.data.models.PullRequests
 import com.example.githubjava.data.request.EndpointPullRequest
-import com.google.gson.JsonArray
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
 
 class PullRequestRepositoryImpl(
 ) : PullRequestRepository {
