@@ -12,6 +12,6 @@ val repositorioViewModelModule = module {
         RepositorioActivity()
     }
 
-    viewModel { RepositorioViewModel(repositorioActivity = get()) }
+    viewModel { RepositorioViewModel() }
 
 }
