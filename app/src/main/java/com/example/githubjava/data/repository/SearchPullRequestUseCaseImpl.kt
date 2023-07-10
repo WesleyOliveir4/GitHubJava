@@ -2,13 +2,14 @@ package com.example.githubjava.data.repository
 
 import com.example.githubjava.BuildConfig
 import com.example.githubjava.data.api.network.NetworkUtils
-import com.example.githubjava.data.models.PullRequests
+import com.example.githubjava.domain.models.PullRequests
 import com.example.githubjava.data.request.EndpointPullRequest
+import com.example.githubjava.domain.pullRequest.SearchPullRequestUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class PullRequestRepositoryImpl(
-) : PullRequestRepository {
+class SearchPullRequestUseCaseImpl(
+) : SearchPullRequestUseCase {
 
     val PullRequestsPath = BuildConfig.PullRequestsPath
     override suspend fun fetchCurrencies(criador: String, repositorio: String): MutableList<PullRequests> {

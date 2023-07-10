@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.githubjava.databinding.PullRequestItemBinding
-import com.example.githubjava.data.models.PullRequests
+import com.example.githubjava.domain.models.PullRequests
 
 class ListaPullRequestsAdapter (
     private val context: Context,

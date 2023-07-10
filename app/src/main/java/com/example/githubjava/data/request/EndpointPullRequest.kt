@@ -1,6 +1,6 @@
 package com.example.githubjava.data.request
 
-import com.example.githubjava.data.models.PullRequests
+import com.example.githubjava.domain.models.PullRequests
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import retrofit2.Call

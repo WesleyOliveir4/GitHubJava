@@ -7,10 +7,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.githubjava.data.model.consultive.SearchRepositorioUseCase
-import com.example.githubjava.data.models.Repositorio
-import com.example.githubjava.data.repository.RepositorioRepository
-import com.example.githubjava.presentation.repositorio.RepositorioActivity
+import com.example.githubjava.domain.consultive.SearchRepositorioUseCase
+import com.example.githubjava.domain.models.Repositorio
+import com.example.githubjava.domain.repositorio.RepositorioRepository
 import com.example.githubjava.presentation.repositorio.state.HomeState
 import kotlinx.coroutines.launch
 import org.koin.java.KoinJavaComponent.inject
