@@ -1,14 +1,14 @@
 package com.example.githubjava.di
 
-import com.example.githubjava.data.repository.PullRequestRepository
-import com.example.githubjava.data.repository.PullRequestRepositoryImpl
+import com.example.githubjava.domain.pullRequest.SearchPullRequestUseCase
+import com.example.githubjava.data.repository.SearchPullRequestUseCaseImpl
 import org.koin.dsl.module
 
 val repositoryPullRequestModule= module {
 
 
-    factory<PullRequestRepository>  {
-        PullRequestRepositoryImpl()
+    factory<SearchPullRequestUseCase>  {
+        SearchPullRequestUseCaseImpl()
     }
 
 }

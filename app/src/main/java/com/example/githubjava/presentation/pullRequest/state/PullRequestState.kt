@@ -1,6 +1,6 @@
 package com.example.githubjava.presentation.pullRequest.state
 
-import com.example.githubjava.data.models.PullRequests
+import com.example.githubjava.domain.models.PullRequests
 
 sealed interface PullRequestState {
 

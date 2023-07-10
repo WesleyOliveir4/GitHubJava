@@ -1,4 +1,4 @@
-package com.example.githubjava.data.models
+package com.example.githubjava.domain.models
 
 import com.google.gson.annotations.SerializedName
 

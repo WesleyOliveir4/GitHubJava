@@ -2,7 +2,6 @@ package com.example.githubjava.presentation.pullRequest
 
 import android.os.Bundle
 import android.util.Log
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.githubjava.databinding.ActivityPullRequestBinding

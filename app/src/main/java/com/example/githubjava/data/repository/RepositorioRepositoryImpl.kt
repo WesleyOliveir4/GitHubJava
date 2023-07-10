@@ -2,15 +2,13 @@ package com.example.githubjava.data.repository
 
 import com.example.githubjava.BuildConfig
 import com.example.githubjava.data.api.network.NetworkUtils
-import com.example.githubjava.data.models.Repositorio
+import com.example.githubjava.domain.models.Repositorio
 import com.example.githubjava.data.request.EndpointRepositorios
-import com.google.gson.JsonArray
-import com.google.gson.JsonObject
+import com.example.githubjava.domain.repositorio.RepositorioRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import retrofit2.Call
 
-class RepositorioRepositoryImpl() :RepositorioRepository {
+class RepositorioRepositoryImpl() : RepositorioRepository {
 
     val RepositoriosPath = BuildConfig.RepositoriosPath
 

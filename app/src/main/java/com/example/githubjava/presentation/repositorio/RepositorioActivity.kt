@@ -6,11 +6,12 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.githubjava.databinding.ActivityHomeBinding
-import com.example.githubjava.data.models.Repositorio
+import com.example.githubjava.domain.models.Repositorio
 import com.example.githubjava.presentation.repositorio.state.HomeState
 import com.example.githubjava.presentation.repositorio.viewmodel.RepositorioViewModel
 import com.example.githubjava.presentation.pullRequest.PullRequestActivity
 import com.example.githubjava.ui.adapter.ListaRepositoriosAdapter
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class RepositorioActivity : AppCompatActivity(), ListaRepositoriosAdapter.SelecionaRepositorio {
@@ -19,12 +20,12 @@ class RepositorioActivity : AppCompatActivity(), ListaRepositoriosAdapter.Seleci
         ActivityHomeBinding.inflate(layoutInflater)
     }
 
-   private val repositorioViewModel = RepositorioViewModel()
+//   private val repositorioViewModel = RepositorioViewModel()
 
     /**
      * Problema para criar um by viewModel() para o RepositorioActivity
      */
-//    private val repositorioViewModel : RepositorioViewModel by viewModel()
+    private val repositorioViewModel : RepositorioViewModel by viewModel()
 
     private var adapter = ListaRepositoriosAdapter(context = this, repositorios = mutableListOf(), this )
 

@@ -1,6 +1,6 @@
-package com.example.githubjava.data.model.consultive
+package com.example.githubjava.domain.consultive
 
-import com.example.githubjava.data.models.Repositorio
+import com.example.githubjava.domain.models.Repositorio
 
 interface SearchRepositorioUseCase {
 
