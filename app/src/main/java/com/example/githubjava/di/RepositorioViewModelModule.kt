@@ -7,11 +7,6 @@ import org.koin.dsl.module
 
 val repositorioViewModelModule = module {
 
-
-    factory<RepositorioActivity> {
-        RepositorioActivity()
-    }
-
-    viewModel { RepositorioViewModel() }
+    viewModel { RepositorioViewModel(get()) }
 
 }

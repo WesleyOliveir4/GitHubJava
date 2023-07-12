@@ -7,21 +7,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.githubjava.domain.consultive.SearchRepositorioUseCase
 import com.example.githubjava.domain.models.Repositorio
-import com.example.githubjava.domain.repositorio.RepositorioRepository
+import com.example.githubjava.domain.repositorio.SearchRepositorioUseCase
 import com.example.githubjava.presentation.repositorio.state.HomeState
 import kotlinx.coroutines.launch
-import org.koin.java.KoinJavaComponent.inject
 
-class RepositorioViewModel() : ViewModel(), SearchRepositorioUseCase {
+class RepositorioViewModel(private val searchRepositorioUseCase: SearchRepositorioUseCase) : ViewModel() {
 
     private val _state by lazy { MutableLiveData<HomeState>() }
     val state: LiveData<HomeState> = _state
     companion object {
         private var paginaAtual: Int = 1
     }
-    private val repositorioRepository: RepositorioRepository by inject(RepositorioRepository::class.java)
 
     fun configuraPaginacao(btnAnterior: Button, btnSeguinte: Button, tvNumeroPagina: TextView) {
 
@@ -50,12 +47,12 @@ class RepositorioViewModel() : ViewModel(), SearchRepositorioUseCase {
         buscandoRepositorios(paginaAtual)
     }
 
-    override suspend fun consultaRepositorio(paginaAtual: Int): List<Repositorio> {
+   suspend fun consultaRepositorio(paginaAtual: Int): List<Repositorio> {
         val page = paginaAtual
         if (page < 1) {
             page == 1
         }
-        return repositorioRepository.fetchCurrencies(page.toString())
+        return searchRepositorioUseCase.fetchCurrencies(page.toString())
     }
 
 
