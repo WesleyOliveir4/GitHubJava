@@ -4,11 +4,11 @@ import com.example.githubjava.BuildConfig
 import com.example.githubjava.data.api.network.NetworkUtils
 import com.example.githubjava.domain.models.Repositorio
 import com.example.githubjava.data.request.EndpointRepositorios
-import com.example.githubjava.domain.repositorio.RepositorioRepository
+import com.example.githubjava.domain.repositorio.SearchRepositorioUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class RepositorioRepositoryImpl() : RepositorioRepository {
+class SearchRepositorioUseCaseImpl() : SearchRepositorioUseCase {
 
     val RepositoriosPath = BuildConfig.RepositoriosPath
 
