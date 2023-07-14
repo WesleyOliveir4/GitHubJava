@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.githubjava.databinding.ActivityHomeBinding
+import com.example.githubjava.di.injectRepositorioViewModelModule
 import com.example.githubjava.domain.models.Repositorio
 import com.example.githubjava.presentation.repositorio.state.HomeState
 import com.example.githubjava.presentation.repositorio.viewmodel.RepositorioViewModel
@@ -19,12 +20,10 @@ class RepositorioActivity : AppCompatActivity(), ListaRepositoriosAdapter.Seleci
     private val binding by lazy {
         ActivityHomeBinding.inflate(layoutInflater)
     }
+    init {
+        injectRepositorioViewModelModule()
+    }
 
-//   private val repositorioViewModel = RepositorioViewModel()
-
-    /**
-     * Problema para criar um by viewModel() para o RepositorioActivity
-     */
     private val repositorioViewModel : RepositorioViewModel by viewModel()
 
     private var adapter = ListaRepositoriosAdapter(context = this, repositorios = mutableListOf(), this )
