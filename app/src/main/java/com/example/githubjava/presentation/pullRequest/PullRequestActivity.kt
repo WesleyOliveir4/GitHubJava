@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.githubjava.databinding.ActivityPullRequestBinding
+import com.example.githubjava.di.injectPullRequestViewModelModule
 import com.example.githubjava.presentation.pullRequest.state.PullRequestState
 import com.example.githubjava.presentation.pullRequest.viewmodel.PullRequestViewModel
 import com.example.githubjava.ui.adapter.ListaPullRequestsAdapter
@@ -16,7 +17,9 @@ class PullRequestActivity : AppCompatActivity() {
         ActivityPullRequestBinding.inflate(layoutInflater)
     }
 
-//    private val pullRequestViewModel = PullRequestViewModel(this)
+    init {
+        injectPullRequestViewModelModule()
+    }
     private val pullRequestViewModel: PullRequestViewModel by viewModel()
 
     private var adapter = ListaPullRequestsAdapter(context = this, pullRequests = mutableListOf())
