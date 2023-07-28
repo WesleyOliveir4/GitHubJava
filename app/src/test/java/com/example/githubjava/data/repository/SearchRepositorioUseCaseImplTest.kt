@@ -10,19 +10,17 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import retrofit2.Response
+import kotlin.test.assertNotNull
 
 
 class SearchRepositorioUseCaseImplTest {
 
     @io.mockk.impl.annotations.MockK
     private lateinit var searchRepositorioUseCaseImpl: SearchRepositorioUseCaseImpl
-    @io.mockk.impl.annotations.MockK
-    private lateinit var page: String
 
     @Before
     fun setup(){
-        searchRepositorioUseCaseImpl = SearchRepositorioUseCaseImpl()
-        page = mockk("1")
+        searchRepositorioUseCaseImpl = mockk()
     }
 
     @Test
@@ -31,12 +29,12 @@ class SearchRepositorioUseCaseImplTest {
         val listRepositorios = mutableListOf<Repositorio>( mockk<Repositorio>())
 
         // Arrange
-        coEvery { searchRepositorioUseCaseImpl.fetchCurrencies(page) } returns listRepositorios
+        coEvery { searchRepositorioUseCaseImpl.fetchCurrencies("1") } returns listRepositorios
 
         // Act
-        searchRepositorioUseCaseImpl.fetchCurrencies(page)
+       val result = searchRepositorioUseCaseImpl.fetchCurrencies("1")
 
         // Assert
-
+        assertNotNull(result)
     }
 }
