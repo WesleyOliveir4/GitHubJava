@@ -4,11 +4,11 @@ import com.google.gson.annotations.SerializedName
 
 data class Repositorio(
     @SerializedName("name")
-    val nomeRepositorio: String,
+    val nomeRepositorio: String? = null,
     @SerializedName("description")
     val descricaoRepositorio: String? = null,
     @SerializedName("login")
-    val nomeAutor: String,
+    val nomeAutor: String? = null,
     @SerializedName("avatar_url")
     val fotoAutor: String? = null,
     @SerializedName("stargazers_count")
