@@ -8,10 +8,13 @@ import io.mockk.MockK
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
+import org.amshove.kluent.`should be instance of`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.assertThrows
 import retrofit2.Response
 import java.util.Optional.empty
 import java.util.function.Predicate.not
@@ -58,5 +61,21 @@ class SearchRepositorioUseCaseImplTest {
         Assert.assertEquals(result[0].nomeRepositorio, "")
 
     }
+
+//    @Test
+//    fun `should_return_repositorios_when_request_return_nome_null`() = runTest{
+//
+//        val listRepositorios = mutableListOf<Repositorio>( Repositorio(null,"","","fotoTeste","10","10",OwnerModel("loginTeste","avatarTeste")))
+//
+//        // Arrange
+//           coEvery { searchRepositorioUseCaseImpl.fetchCurrencies("1") } returns throw Exception()
+////        assertThrows<Exception> {   coEvery { searchRepositorioUseCaseImpl.fetchCurrencies("1") } returns throw Exception("teste")  }
+//        // Act
+//        val result : MutableList<Repositorio> = searchRepositorioUseCaseImpl.fetchCurrencies("1")
+//
+//        // Assert
+//        result.`should be instance of`(Exception::class.java)
+//
+//    }
 }
 
