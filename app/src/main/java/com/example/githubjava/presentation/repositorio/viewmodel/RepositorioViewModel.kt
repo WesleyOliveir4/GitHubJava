@@ -29,11 +29,7 @@ class RepositorioViewModel(private val searchRepositorioUseCase: SearchRepositor
                 paginaAtual -= 1
                 tvNumeroPagina.text = paginaAtual.toString()
                 consultaApiGit()
-            } else {
-                return@OnClickListener
             }
-
-
         })
 
         btnSeguinte.setOnClickListener(View.OnClickListener {
@@ -47,20 +43,25 @@ class RepositorioViewModel(private val searchRepositorioUseCase: SearchRepositor
         buscandoRepositorios(paginaAtual)
     }
 
-   suspend fun consultaRepositorio(paginaAtual: Int): List<Repositorio> {
-        val page = paginaAtual
-        if (page < 1) {
-            page == 1
-        }
-        return searchRepositorioUseCase.fetchCurrencies(page.toString())
-    }
-
-
     fun buscandoRepositorios(page: Int) {
         viewModelScope.launch {
-            val resultado = consultaRepositorio(page)
+            if (page < 1) {
+                page == 1
+            }
+            val resultado = searchRepositorioUseCase.fetchCurrencies(page.toString())
             _state.postValue(HomeState.ShowItems(resultado.toMutableList()))
         }
     }
+
+//   suspend fun consultaRepositorio(paginaAtual: Int): List<Repositorio> {
+//        val page = paginaAtual
+//        if (page < 1) {
+//            page == 1
+//        }
+//        return searchRepositorioUseCase.fetchCurrencies(page.toString())
+//    }
+
+
+
 
 }
