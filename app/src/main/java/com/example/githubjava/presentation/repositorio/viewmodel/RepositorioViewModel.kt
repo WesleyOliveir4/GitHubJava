@@ -53,15 +53,5 @@ class RepositorioViewModel(private val searchRepositorioUseCase: SearchRepositor
         }
     }
 
-//   suspend fun consultaRepositorio(paginaAtual: Int): List<Repositorio> {
-//        val page = paginaAtual
-//        if (page < 1) {
-//            page == 1
-//        }
-//        return searchRepositorioUseCase.fetchCurrencies(page.toString())
-//    }
-
-
-
 
 }
