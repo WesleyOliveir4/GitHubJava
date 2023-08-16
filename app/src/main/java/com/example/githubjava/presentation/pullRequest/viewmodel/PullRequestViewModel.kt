@@ -17,15 +17,10 @@ class PullRequestViewModel(private val searchPullRequestUseCase : SearchPullRequ
     fun buscandoPullRequests(nomeCriador: String, nomeRepositorio: String) {
 
         viewModelScope.launch {
-            val resultado = consultaPullRequest(nomeCriador,nomeRepositorio)
+            val resultado = searchPullRequestUseCase.fetchCurrencies(nomeCriador, nomeRepositorio)
             _state.postValue(PullRequestState.ShowItems(resultado.toMutableList()))
         }
 
-    }
-
-    suspend fun consultaPullRequest(nomeCriador: String,
-              nomeRepositorio: String): MutableList<PullRequests> {
-        return searchPullRequestUseCase.fetchCurrencies(nomeCriador, nomeRepositorio)
     }
 
 }
