@@ -13,6 +13,7 @@ class SearchPullRequestUseCaseImpl(
 
     val PullRequestsPath = BuildConfig.PullRequestsPath
     override suspend fun fetchCurrencies(criador: String, repositorio: String): MutableList<PullRequests> {
+
         return withContext(Dispatchers.IO) {
             val retrofitClient = NetworkUtils.getRetrofitInstance(PullRequestsPath)
             val endpoint = retrofitClient.create(EndpointPullRequest::class.java)
