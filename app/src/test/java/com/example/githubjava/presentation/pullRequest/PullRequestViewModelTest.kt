@@ -4,24 +4,35 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.githubjava.domain.models.PullRequests
 import com.example.githubjava.domain.models.User
 import com.example.githubjava.domain.pullRequest.SearchPullRequestUseCase
+import com.example.githubjava.presentation.pullRequest.state.PullRequestState
 import com.example.githubjava.presentation.pullRequest.viewmodel.PullRequestViewModel
 import com.example.githubjava.presentation.repositorio.viewmodel.RepositorioViewModel
 import io.mockk.coEvery
+import io.mockk.core.ValueClassSupport.boxedValue
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.newSingleThreadContext
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
+import kotlinx.coroutines.time.withTimeout
+import kotlinx.coroutines.withTimeout
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.core.IsInstanceOf
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.Timeout.seconds
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
+import java.time.Duration
+import kotlin.test.assertContains
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
+import kotlin.time.Duration.Companion.seconds
 
 class PullRequestViewModelTest {
     @get:Rule
@@ -53,14 +64,13 @@ class PullRequestViewModelTest {
     }
 
     @Test
-    fun `should search pullRequest is successful`() = runTest {
+    fun `should search pullRequest is successful`() = runBlocking<Unit> {
         val listPullRequest = mutableListOf<PullRequests>(
             PullRequests(
                 "nomeAutorTeste", "tituloTeste", "dataTeste", "bodyTeste",
                 User("loginTeste")
             )
         )
-        var stateReturn: Boolean = false
 
         // Arrange
         coEvery {
@@ -71,14 +81,14 @@ class PullRequestViewModelTest {
         } returns listPullRequest
 
         // Act
+
         pullRequestViewModel.buscandoPullRequests("criadorTeste","repositorioTeste")
+        val result = withTimeout(Duration.ofSeconds(1)) {
+            pullRequestViewModel.state.value
+        }
 
 
         // Assert
-        pullRequestViewModel.state.observeForever {
-            if(it != null) {
-                assertTrue(stateReturn.not(), "should search pullRequest is successful ( Test successful )")
-            }
-        }
+        assertNotNull(result)
     }
 }
