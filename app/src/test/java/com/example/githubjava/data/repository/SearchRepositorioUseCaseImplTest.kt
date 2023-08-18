@@ -43,7 +43,7 @@ class SearchRepositorioUseCaseImplTest {
        val result : MutableList<Repositorio> = searchRepositorioUseCaseImpl.fetchCurrencies("1")
 
         // Assert
-        assertNotNull(result[0].nomeAutor)
+        assertNotEquals(result[0].nomeRepositorio,"")
     }
 
     @Test
@@ -62,20 +62,5 @@ class SearchRepositorioUseCaseImplTest {
 
     }
 
-//    @Test
-//    fun `should_return_repositorios_when_request_return_nome_null`() = runTest{
-//
-//        val listRepositorios = mutableListOf<Repositorio>( Repositorio(null,"","","fotoTeste","10","10",OwnerModel("loginTeste","avatarTeste")))
-//
-//        // Arrange
-//           coEvery { searchRepositorioUseCaseImpl.fetchCurrencies("1") } returns throw Exception()
-////        assertThrows<Exception> {   coEvery { searchRepositorioUseCaseImpl.fetchCurrencies("1") } returns throw Exception("teste")  }
-//        // Act
-//        val result : MutableList<Repositorio> = searchRepositorioUseCaseImpl.fetchCurrencies("1")
-//
-//        // Assert
-//        result.`should be instance of`(Exception::class.java)
-//
-//    }
 }
 
