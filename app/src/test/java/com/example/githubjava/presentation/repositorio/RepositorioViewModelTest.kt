@@ -32,9 +32,13 @@ import kotlin.test.assertTrue
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.githubjava.presentation.repositorio.state.HomeState
 import io.mockk.core.ValueClassSupport.boxedValue
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.time.withTimeout
+import kotlinx.coroutines.withTimeout
 import okhttp3.internal.wait
 import org.amshove.kluent.`should be null`
 import org.koin.core.component.getScopeName
+import java.time.Duration
 
 class RepositorioViewModelTest {
     @get:Rule
@@ -66,12 +70,11 @@ class RepositorioViewModelTest {
     }
 
     @Test
-    fun`should search repositorio is successful`()= runTest {
+    fun`should search repositorio is successful`()= runBlocking<Unit> {
         val listRepositorios = mutableListOf<Repositorio>( Repositorio("nomeTeste","descTeste","autorTeste","fotoTeste","10","10",
             OwnerModel("loginTeste","avatarTeste")
         )
         )
-        var stateReturn: Boolean = false
 
         // Arrange
             coEvery { searchRepositorioUseCase.fetchCurrencies("1") } answers {
@@ -81,13 +84,12 @@ class RepositorioViewModelTest {
         // Act
         repositorioViewModel.consultaApiGit()
         repositorioViewModel.buscandoRepositorios(0)
-
-        // Assert
-        repositorioViewModel.state.observeForever {
-           if(it != null) {
-               assertTrue(stateReturn.not(), "should search repositorio is successful ( Test successful )")
-           }
+        val result = withTimeout(Duration.ofSeconds(1)) {
+            repositorioViewModel.state.value
         }
+        // Assert
+
+        assertNotNull(result)
 
     }
 }
