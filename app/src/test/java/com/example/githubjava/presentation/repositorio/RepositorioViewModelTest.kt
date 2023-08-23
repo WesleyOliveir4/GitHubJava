@@ -10,8 +10,6 @@ import com.example.githubjava.presentation.repositorio.viewmodel.RepositorioView
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
@@ -32,9 +30,8 @@ import kotlin.test.assertTrue
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.githubjava.presentation.repositorio.state.HomeState
 import io.mockk.core.ValueClassSupport.boxedValue
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 import kotlinx.coroutines.time.withTimeout
-import kotlinx.coroutines.withTimeout
 import okhttp3.internal.wait
 import org.amshove.kluent.`should be null`
 import org.koin.core.component.getScopeName
@@ -70,7 +67,7 @@ class RepositorioViewModelTest {
     }
 
     @Test
-    fun`should search repositorio is successful`()= runBlocking<Unit> {
+    fun`should search repositorio is successful`()= runTest {
         val listRepositorios = mutableListOf<Repositorio>( Repositorio("nomeTeste","descTeste","autorTeste","fotoTeste","10","10",
             OwnerModel("loginTeste","avatarTeste")
         )
@@ -83,8 +80,8 @@ class RepositorioViewModelTest {
 
         // Act
         repositorioViewModel.consultaApiGit()
-        repositorioViewModel.buscandoRepositorios(0)
-        val result = withTimeout(Duration.ofSeconds(1)) {
+        repositorioViewModel.buscandoRepositorios(1)
+        val result = async {
             repositorioViewModel.state.value
         }
         // Assert

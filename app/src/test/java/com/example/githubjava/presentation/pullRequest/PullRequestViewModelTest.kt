@@ -10,14 +10,11 @@ import com.example.githubjava.presentation.repositorio.viewmodel.RepositorioView
 import io.mockk.coEvery
 import io.mockk.core.ValueClassSupport.boxedValue
 import io.mockk.mockk
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.newSingleThreadContext
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import kotlinx.coroutines.time.withTimeout
-import kotlinx.coroutines.withTimeout
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsInstanceOf
 import org.junit.After
@@ -27,6 +24,7 @@ import org.junit.Test
 import org.junit.rules.Timeout.seconds
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
 import org.koin.dsl.module
 import java.time.Duration
 import kotlin.test.assertContains
@@ -61,10 +59,11 @@ class PullRequestViewModelTest {
     fun tearDown() {
         Dispatchers.resetMain() // reset the main dispatcher to the original Main dispatcher
         mainThreadSurrogate.close()
+        stopKoin()
     }
 
     @Test
-    fun `should search pullRequest is successful`() = runBlocking<Unit> {
+    fun `should search pullRequest is successful`() = runTest {
         val listPullRequest = mutableListOf<PullRequests>(
             PullRequests(
                 "nomeAutorTeste", "tituloTeste", "dataTeste", "bodyTeste",
@@ -83,7 +82,7 @@ class PullRequestViewModelTest {
         // Act
 
         pullRequestViewModel.buscandoPullRequests("criadorTeste","repositorioTeste")
-        val result = withTimeout(Duration.ofSeconds(1)) {
+        val result = async {
             pullRequestViewModel.state.value
         }
 
