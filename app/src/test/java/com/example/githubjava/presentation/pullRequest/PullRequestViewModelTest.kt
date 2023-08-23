@@ -82,7 +82,7 @@ class PullRequestViewModelTest {
         // Act
 
         pullRequestViewModel.buscandoPullRequests("criadorTeste","repositorioTeste")
-        val result = async {
+        val result = launch {
             pullRequestViewModel.state.value
         }
 
