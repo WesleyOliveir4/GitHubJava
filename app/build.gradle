@@ -1,11 +1,13 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'jacoco'
 }
 
 android {
     namespace 'com.example.githubjava'
     compileSdk 33
+    apply plugin: 'jacoco'
 
     defaultConfig {
         applicationId "com.example.githubjava"
@@ -41,9 +43,26 @@ android {
     }
     testOptions {
         unitTests.returnDefaultValues = true
+        buildTypes {
+            // Jacoco config: It configures/enables createDebugCoverageReport task to be used in generateCodeCoverage task below
+            debug.testCoverageEnabled = true
+        }
+    }
+    tasks.register('codeCoverage', JacocoReport) {
+        dependsOn 'testDebugUnitTest', 'createDebugCoverageReport'
+        // run unit tests and ui tests to generate code coverage report
+        reports {
+            html.required.set(true)
+            html.outputLocation = layout.buildDirectory.dir('reports/jacoco')
+        }
     }
 
 }
+jacoco {
+    toolVersion = "0.8.9"
+    reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
+}
+
 
 dependencies {
 
