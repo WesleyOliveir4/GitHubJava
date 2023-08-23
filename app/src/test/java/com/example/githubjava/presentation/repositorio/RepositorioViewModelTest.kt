@@ -81,7 +81,8 @@ class RepositorioViewModelTest {
         // Act
         repositorioViewModel.consultaApiGit()
         repositorioViewModel.buscandoRepositorios(1)
-        val result = async {
+        val result = launch {
+
             repositorioViewModel.state.value
         }
         // Assert
