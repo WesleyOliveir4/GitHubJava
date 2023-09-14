@@ -54,7 +54,7 @@ class RepositorioActivity : AppCompatActivity(), ListaRepositoriosAdapter.Seleci
         })
 
         repositorioViewModel.configuraPaginacao(btnAnterior, btnSeguinte, tvNumeroPagina)
-        repositorioViewModel.consultaApiGit()
+        repositorioViewModel.buscandoRepositorios()
 
     }
 

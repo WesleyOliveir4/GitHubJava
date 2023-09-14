@@ -79,8 +79,7 @@ class RepositorioViewModelTest {
             }
 
         // Act
-        repositorioViewModel.consultaApiGit()
-        repositorioViewModel.buscandoRepositorios(1)
+        repositorioViewModel.buscandoRepositorios()
         val result = launch {
 
             repositorioViewModel.state.value

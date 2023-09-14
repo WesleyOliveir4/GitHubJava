@@ -28,27 +28,23 @@ class RepositorioViewModel(private val searchRepositorioUseCase: SearchRepositor
             if (paginaAtual > 1) {
                 paginaAtual -= 1
                 tvNumeroPagina.text = paginaAtual.toString()
-                consultaApiGit()
+                buscandoRepositorios()
             }
         })
 
         btnSeguinte.setOnClickListener(View.OnClickListener {
             paginaAtual += 1
             tvNumeroPagina.text = paginaAtual.toString()
-            consultaApiGit()
+            buscandoRepositorios()
         })
     }
 
-    fun consultaApiGit() {
-        buscandoRepositorios(paginaAtual)
-    }
-
-    fun buscandoRepositorios(page: Int) {
+    fun buscandoRepositorios() {
         viewModelScope.launch {
-            if (page < 1) {
-                page == 1
+            if (paginaAtual < 1) {
+                paginaAtual == 1
             }
-            val resultado = searchRepositorioUseCase.fetchCurrencies(page.toString())
+            val resultado = searchRepositorioUseCase.fetchCurrencies(paginaAtual.toString())
             _state.postValue(HomeState.ShowItems(resultado.toMutableList()))
         }
     }
