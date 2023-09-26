@@ -11,10 +11,8 @@ import com.example.githubjava.domain.models.PullRequests
 
 class ListaPullRequestsAdapter (
     private val context: Context,
-    pullRequests: List<PullRequests>
 ): ListAdapter<PullRequests,ListaPullRequestsAdapter.ViewHolder>(DiffUtilCallBack) {
 
-    private val pullRequests = pullRequests.toMutableList()
 
     class ViewHolder(private val binding: PullRequestItemBinding) : RecyclerView.ViewHolder(binding.root) {
 

@@ -14,11 +14,9 @@ import com.example.githubjava.domain.models.Repositorio
 
 class ListaRepositoriosAdapter(
     private val context: Context,
-    repositorios: List<Repositorio>,
     var selecionaRepositorio: SelecionaRepositorio
 ):  ListAdapter<Repositorio,ListaRepositoriosAdapter.ViewHolder>(DiffUtilCallBack) {
 
-    private val repositorios = repositorios.toMutableList()
     interface SelecionaRepositorio{
         fun selecionaRepositorio(repositorio: Repositorio)
     }
@@ -56,14 +54,6 @@ class ListaRepositoriosAdapter(
             selecionaRepositorio.selecionaRepositorio(repositorio)
         })
     }
-
-//    override fun getItemCount(): Int = repositorios.size
-//    fun atualiza(repositorios: List<Repositorio>) {
-//        notifyDataSetChanged()
-//        this.repositorios.clear()
-//        this.repositorios.addAll(repositorios)
-//
-//    }
 
     private object DiffUtilCallBack : DiffUtil.ItemCallback<Repositorio>(){
         override fun areItemsTheSame(oldItem: Repositorio, newItem: Repositorio): Boolean {
