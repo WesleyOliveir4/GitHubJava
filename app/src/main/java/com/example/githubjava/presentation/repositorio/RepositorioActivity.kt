@@ -3,7 +3,9 @@ package com.example.githubjava.presentation.repositorio
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.Observer
 import com.example.githubjava.databinding.ActivityHomeBinding
 import com.example.githubjava.di.injectRepositorioViewModelModule
@@ -31,30 +33,39 @@ class RepositorioActivity : AppCompatActivity(), ListaRepositoriosAdapter.Seleci
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
+        repositorioViewModel.configuraPaginacao(false)
     }
 
     override fun onResume() {
         super.onResume()
 
         val recyclerView = binding.recyclerView
-        val btnAnterior = binding.btnAnterior
-        val btnSeguinte = binding.btnSeguinte
-        val tvNumeroPagina = binding.tvNumeroPagina
+        val nsvRepos = binding.nsvRepos
+        val pbLoadingRepos = binding.pbLoading
+
 
         repositorioViewModel.state.observe(this, Observer { state ->
             when(state){
                 is HomeState.ShowItems -> {
                     recyclerView.adapter = adapter
                     adapter.submitList(state.items)
+                    pbLoadingRepos.visibility = View.INVISIBLE
                     Log.d("stateHomeActivity", "${state.items[0].nomeRepositorio}")
+                    Log.d("stateHomeActivityTotal", "${state.items.size}")
                 }
                 else -> Log.d("stateHomeActivity", "retornou com erro")
             }
         })
 
-        repositorioViewModel.configuraPaginacao(btnAnterior, btnSeguinte, tvNumeroPagina)
-        repositorioViewModel.buscandoRepositorios()
+
+        nsvRepos.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener{
+                v, scrollX, scrollY, oldScrollX, oldScrollY ->
+
+            if(scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
+                pbLoadingRepos.visibility = View.VISIBLE
+                repositorioViewModel.configuraPaginacao(true)
+            }
+        })
 
     }
 
