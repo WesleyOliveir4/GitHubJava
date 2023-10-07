@@ -35,6 +35,7 @@ import kotlinx.coroutines.time.withTimeout
 import okhttp3.internal.wait
 import org.amshove.kluent.`should be null`
 import org.koin.core.component.getScopeName
+import org.koin.core.context.stopKoin
 import java.time.Duration
 
 class RepositorioViewModelTest {
@@ -62,7 +63,8 @@ class RepositorioViewModelTest {
 
     @After
     fun tearDown() {
-        Dispatchers.resetMain() // reset the main dispatcher to the original Main dispatcher
+        Dispatchers.resetMain() // reset the main dispatcher to the original Main dispatcher]
+        stopKoin()
         mainThreadSurrogate.close()
     }
 
