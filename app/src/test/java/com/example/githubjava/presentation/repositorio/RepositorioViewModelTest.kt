@@ -67,7 +67,7 @@ class RepositorioViewModelTest {
     }
 
     @Test
-    fun`should search repositorio is successful`()= runTest {
+    fun`should search repositorio page is successful`()= runTest {
         val listRepositorios = mutableListOf<Repositorio>( Repositorio("nomeTeste","descTeste","autorTeste","fotoTeste","10","10",
             OwnerModel("loginTeste","avatarTeste")
         )
@@ -79,9 +79,31 @@ class RepositorioViewModelTest {
             }
 
         // Act
-        repositorioViewModel.buscandoRepositorios()
+        repositorioViewModel.configuraPaginacao(false)
         val result = launch {
+            repositorioViewModel.state.value
+        }
+        // Assert
 
+        assertNotNull(result)
+
+    }
+
+    @Test
+    fun`should search repositorio next pages is successful`()= runTest {
+        val listRepositorios = mutableListOf<Repositorio>( Repositorio("nomeTeste","descTeste","autorTeste","fotoTeste","10","10",
+            OwnerModel("loginTeste","avatarTeste")
+        )
+        )
+
+        // Arrange
+        coEvery { searchRepositorioUseCase.fetchCurrencies("2") } answers {
+            listRepositorios
+        }
+
+        // Act
+        repositorioViewModel.configuraPaginacao(true)
+        val result = launch {
             repositorioViewModel.state.value
         }
         // Assert
