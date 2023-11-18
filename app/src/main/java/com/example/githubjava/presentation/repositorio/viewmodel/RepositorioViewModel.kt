@@ -15,7 +15,7 @@ class RepositorioViewModel(private val searchRepositorioUseCase: SearchRepositor
     val state: LiveData<HomeState> = _state
     companion object {
         private var paginaAtual: Int = 1
-        val reposReturned: MutableList<Repositorio> = emptyList<Repositorio>().toMutableList()
+        val repositoriosResponseList: MutableList<Repositorio> = emptyList<Repositorio>().toMutableList()
     }
 
     fun configuraPaginacao(lastItem: Boolean) {
@@ -30,8 +30,8 @@ class RepositorioViewModel(private val searchRepositorioUseCase: SearchRepositor
 
     fun buscandoRepositorios() {
         viewModelScope.launch {
-            reposReturned.addAll(searchRepositorioUseCase.fetchCurrencies(paginaAtual.toString()))
-            _state.postValue(HomeState.ShowItems(reposReturned))
+            repositoriosResponseList.addAll(searchRepositorioUseCase.fetchCurrencies(paginaAtual.toString()))
+            _state.postValue(HomeState.ShowItems(repositoriosResponseList))
         }
     }
 

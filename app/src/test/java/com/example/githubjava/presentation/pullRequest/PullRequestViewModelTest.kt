@@ -63,7 +63,7 @@ class PullRequestViewModelTest {
     }
 
     @Test
-    fun `should search pullRequest is successful`() = runTest {
+    fun `should when search pullRequest is successful`() = runTest {
         val listPullRequest = mutableListOf<PullRequests>(
             PullRequests(
                 "nomeAutorTeste", "tituloTeste", "dataTeste", "bodyTeste",

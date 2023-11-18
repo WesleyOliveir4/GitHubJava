@@ -40,8 +40,8 @@ class RepositorioActivity : AppCompatActivity(), ListaRepositoriosAdapter.Seleci
         super.onResume()
 
         val recyclerView = binding.recyclerView
-        val nsvRepos = binding.nsvRepos
-        val pbLoadingRepos = binding.pbLoading
+        val nestedScrollViewRepositorios = binding.NestedScrollViewRepositorios
+        val progressBarLoadingRepositorios = binding.ProgressBarLoadingRepositorios
 
 
         repositorioViewModel.state.observe(this, Observer { state ->
@@ -49,7 +49,7 @@ class RepositorioActivity : AppCompatActivity(), ListaRepositoriosAdapter.Seleci
                 is HomeState.ShowItems -> {
                     recyclerView.adapter = adapter
                     adapter.submitList(state.items)
-                    pbLoadingRepos.visibility = View.INVISIBLE
+                    progressBarLoadingRepositorios.visibility = View.INVISIBLE
                     Log.d("stateHomeActivity", "${state.items[0].nomeRepositorio}")
                     Log.d("stateHomeActivityTotal", "${state.items.size}")
                 }
@@ -58,11 +58,11 @@ class RepositorioActivity : AppCompatActivity(), ListaRepositoriosAdapter.Seleci
         })
 
 
-        nsvRepos.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener{
+        nestedScrollViewRepositorios.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener{
                 v, scrollX, scrollY, oldScrollX, oldScrollY ->
 
             if(scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
-                pbLoadingRepos.visibility = View.VISIBLE
+                progressBarLoadingRepositorios.visibility = View.VISIBLE
                 repositorioViewModel.configuraPaginacao(true)
             }
         })

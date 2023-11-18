@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/nsvRepos"
+        android:id="@+id/NestedScrollViewRepositorios"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -23,7 +23,7 @@
     </androidx.core.widget.NestedScrollView>
 
     <ProgressBar
-        android:id="@+id/pbLoading"
+        android:id="@+id/ProgressBarLoadingRepositorios"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         app:layout_constraintStart_toStartOf="parent"

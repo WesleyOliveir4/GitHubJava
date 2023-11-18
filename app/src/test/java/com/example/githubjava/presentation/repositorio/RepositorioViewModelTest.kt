@@ -69,7 +69,7 @@ class RepositorioViewModelTest {
     }
 
     @Test
-    fun`should search repositorio page is successful`()= runTest {
+    fun`should when search repositorio page is successful`()= runTest {
         val listRepositorios = mutableListOf<Repositorio>( Repositorio("nomeTeste","descTeste","autorTeste","fotoTeste","10","10",
             OwnerModel("loginTeste","avatarTeste")
         )
@@ -92,7 +92,7 @@ class RepositorioViewModelTest {
     }
 
     @Test
-    fun`should search repositorio next pages is successful`()= runTest {
+    fun`should when search repositorio next pages is successful`()= runTest {
         val listRepositorios = mutableListOf<Repositorio>( Repositorio("nomeTeste","descTeste","autorTeste","fotoTeste","10","10",
             OwnerModel("loginTeste","avatarTeste")
         )
