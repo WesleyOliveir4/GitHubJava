@@ -38,8 +38,8 @@ class SearchPullRequestUseCaseImplTest {
         // Act
         val result : MutableList<PullRequests> = searchPullRequestUseCaseImpl.fetchCurrencies("criadorTeste","repositorioTeste")
 
-        // Assert
-        assertNotEquals(result[0].nomeAutorPullrequests, "")
+        // AssertlistPullRequest
+        assertEquals(listPullRequest, result)
     }
 
     @Test

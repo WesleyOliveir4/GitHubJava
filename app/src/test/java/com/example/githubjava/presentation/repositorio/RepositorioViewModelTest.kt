@@ -29,6 +29,7 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.githubjava.presentation.repositorio.state.HomeState
+import com.example.githubjava.presentation.repositorio.viewmodel.RepositorioViewModel.Companion.repositoriosResponseList
 import io.mockk.core.ValueClassSupport.boxedValue
 import kotlinx.coroutines.*
 import kotlinx.coroutines.time.withTimeout
@@ -37,6 +38,7 @@ import org.amshove.kluent.`should be null`
 import org.koin.core.component.getScopeName
 import org.koin.core.context.stopKoin
 import java.time.Duration
+import kotlin.test.assertEquals
 
 class RepositorioViewModelTest {
     @get:Rule
@@ -82,13 +84,9 @@ class RepositorioViewModelTest {
 
         // Act
         repositorioViewModel.configuraPaginacao(false)
-        val result = launch {
-            repositorioViewModel.state.value
-        }
+
         // Assert
-
-        assertNotNull(result)
-
+        assertEquals(listRepositorios,repositoriosResponseList)
     }
 
     @Test
@@ -105,12 +103,8 @@ class RepositorioViewModelTest {
 
         // Act
         repositorioViewModel.configuraPaginacao(true)
-        val result = launch {
-            repositorioViewModel.state.value
-        }
+
         // Assert
-
-        assertNotNull(result)
-
+        assertEquals(listRepositorios,repositoriosResponseList)
     }
 }

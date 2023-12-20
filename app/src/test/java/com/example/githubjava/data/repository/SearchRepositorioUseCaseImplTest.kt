@@ -43,7 +43,7 @@ class SearchRepositorioUseCaseImplTest {
        val result : MutableList<Repositorio> = searchRepositorioUseCaseImpl.fetchCurrencies("1")
 
         // Assert
-        assertNotEquals(result[0].nomeRepositorio,"")
+        assertEquals(listRepositorios,result)
     }
 
     @Test
