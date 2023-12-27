@@ -1,43 +1,31 @@
 package com.example.githubjava.presentation.repositorio
 
 
-import androidx.arch.core.executor.TaskExecutor
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LifecycleRegistry
 import com.example.githubjava.domain.models.OwnerModel
 import com.example.githubjava.domain.models.Repositorio
 import com.example.githubjava.domain.repositorio.SearchRepositorioUseCase
-
+import com.example.githubjava.presentation.repositorio.state.HomeState
 import com.example.githubjava.presentation.repositorio.viewmodel.RepositorioViewModel
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.core.IsInstanceOf
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.core.component.getScopeId
 import org.koin.core.context.startKoin
-import org.koin.dsl.module
-import org.koin.test.get
-import kotlin.test.assertNotEquals
-import kotlin.test.assertNotNull
-import kotlin.test.assertTrue
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.githubjava.presentation.repositorio.state.HomeState
-import com.example.githubjava.presentation.repositorio.viewmodel.RepositorioViewModel.Companion.repositoriosResponseList
-import io.mockk.core.ValueClassSupport.boxedValue
-import kotlinx.coroutines.*
-import kotlinx.coroutines.time.withTimeout
-import okhttp3.internal.wait
-import org.amshove.kluent.`should be null`
-import org.koin.core.component.getScopeName
 import org.koin.core.context.stopKoin
-import java.time.Duration
+import org.koin.dsl.module
 import kotlin.test.assertEquals
 
 class RepositorioViewModelTest {
@@ -71,40 +59,72 @@ class RepositorioViewModelTest {
     }
 
     @Test
-    fun`should when search repositorio page is successful`()= runTest {
+    fun`should_search_repositorio_page_when_return_successful`()= runTest {
         val listRepositorios = mutableListOf<Repositorio>( Repositorio("nomeTeste","descTeste","autorTeste","fotoTeste","10","10",
             OwnerModel("loginTeste","avatarTeste")
         )
         )
+        val mockLifecycleOwner = mockk<LifecycleOwner>()
 
         // Arrange
             coEvery { searchRepositorioUseCase.fetchCurrencies("1") } answers {
                 listRepositorios
             }
 
+            every { mockLifecycleOwner.lifecycle } returns LifecycleRegistry(mockLifecycleOwner).apply {
+            handleLifecycleEvent(Lifecycle.Event.ON_CREATE)
+            handleLifecycleEvent(Lifecycle.Event.ON_START)
+            handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
+            }
+
         // Act
         repositorioViewModel.configuraPaginacao(false)
 
         // Assert
-        assertEquals(listRepositorios,repositoriosResponseList)
+        repositorioViewModel.state.observe(mockLifecycleOwner) { state ->
+            when (state) {
+                is HomeState.ShowItems -> {
+                    assertEquals(
+                        listRepositorios[0],
+                        state.items[0]
+                    )
+                }
+            }
+        }
     }
 
     @Test
-    fun`should when search repositorio next pages is successful`()= runTest {
+    fun`should_search_repositorio_next_pages_when_return_successful`()= runTest {
         val listRepositorios = mutableListOf<Repositorio>( Repositorio("nomeTeste","descTeste","autorTeste","fotoTeste","10","10",
             OwnerModel("loginTeste","avatarTeste")
         )
         )
+        val mockLifecycleOwner = mockk<LifecycleOwner>()
 
         // Arrange
         coEvery { searchRepositorioUseCase.fetchCurrencies("2") } answers {
             listRepositorios
         }
 
+        every { mockLifecycleOwner.lifecycle } returns LifecycleRegistry(mockLifecycleOwner).apply {
+            handleLifecycleEvent(Lifecycle.Event.ON_CREATE)
+            handleLifecycleEvent(Lifecycle.Event.ON_START)
+            handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
+        }
+
         // Act
         repositorioViewModel.configuraPaginacao(true)
 
         // Assert
-        assertEquals(listRepositorios,repositoriosResponseList)
+        repositorioViewModel.state.observe(mockLifecycleOwner) { state ->
+            when (state) {
+                is HomeState.ShowItems -> {
+                    assertEquals(
+                        listRepositorios[0],
+                        state.items[0]
+                    )
+                }
+            }
+        }
     }
 }
