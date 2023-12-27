@@ -1,36 +1,32 @@
 package com.example.githubjava.presentation.pullRequest
 
+import android.util.Log
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LifecycleRegistry
 import com.example.githubjava.domain.models.PullRequests
 import com.example.githubjava.domain.models.User
 import com.example.githubjava.domain.pullRequest.SearchPullRequestUseCase
 import com.example.githubjava.presentation.pullRequest.state.PullRequestState
 import com.example.githubjava.presentation.pullRequest.viewmodel.PullRequestViewModel
-import com.example.githubjava.presentation.repositorio.viewmodel.RepositorioViewModel
 import io.mockk.coEvery
-import io.mockk.core.ValueClassSupport.boxedValue
+import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import kotlinx.coroutines.time.withTimeout
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.core.IsInstanceOf
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.rules.Timeout.seconds
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.dsl.module
-import java.time.Duration
-import kotlin.test.assertContains
-import kotlin.test.assertNotNull
-import kotlin.test.assertTrue
-import kotlin.time.Duration.Companion.seconds
+import kotlin.test.assertEquals
 
 class PullRequestViewModelTest {
     @get:Rule
@@ -63,13 +59,15 @@ class PullRequestViewModelTest {
     }
 
     @Test
-    fun `should when search pullRequest is successful`() = runTest {
+    fun `should_search_pullRequest_when_return_successful`() = runTest {
         val listPullRequest = mutableListOf<PullRequests>(
             PullRequests(
                 "nomeAutorTeste", "tituloTeste", "dataTeste", "bodyTeste",
                 User("loginTeste")
             )
         )
+        val mockLifecycleOwner = mockk<LifecycleOwner>()
+
 
         // Arrange
         coEvery {
@@ -77,17 +75,30 @@ class PullRequestViewModelTest {
                 "criadorTeste",
                 "repositorioTeste"
             )
-        } returns listPullRequest
+        } answers{listPullRequest}
 
-        // Act
-
-        pullRequestViewModel.buscandoPullRequests("criadorTeste","repositorioTeste")
-        val result = launch {
-            pullRequestViewModel.state.value
+        every { mockLifecycleOwner.lifecycle } returns LifecycleRegistry(mockLifecycleOwner).apply {
+            handleLifecycleEvent(Lifecycle.Event.ON_CREATE)
+            handleLifecycleEvent(Lifecycle.Event.ON_START)
+            handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
         }
 
+        // Act
+        pullRequestViewModel.buscandoPullRequests("criadorTeste", "repositorioTeste")
 
         // Assert
-        assertNotNull(result)
+       pullRequestViewModel.state.observe(mockLifecycleOwner) { state ->
+            when (state) {
+                is PullRequestState.ShowItems -> {
+                    assertEquals(
+                        listPullRequest[0].tituloPullRequests,
+                        state.items[0].tituloPullRequests
+                    )
+                }
+                else -> Log.d("stateHomeActivity", "retornou com erro")
+            }
+        }
+
     }
+
 }
