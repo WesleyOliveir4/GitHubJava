@@ -1,8 +1,5 @@
 package com.example.githubjava.presentation.repositorio.viewmodel
 
-import android.view.View
-import android.widget.Button
-import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,34 +15,23 @@ class RepositorioViewModel(private val searchRepositorioUseCase: SearchRepositor
     val state: LiveData<HomeState> = _state
     companion object {
         private var paginaAtual: Int = 1
+        val repositoriosResponseList: MutableList<Repositorio> = emptyList<Repositorio>().toMutableList()
     }
 
-    fun configuraPaginacao(btnAnterior: Button, btnSeguinte: Button, tvNumeroPagina: TextView) {
-
-        tvNumeroPagina.text = paginaAtual.toString()
-
-        btnAnterior.setOnClickListener(View.OnClickListener {
-            if (paginaAtual > 1) {
-                paginaAtual -= 1
-                tvNumeroPagina.text = paginaAtual.toString()
-                buscandoRepositorios()
-            }
-        })
-
-        btnSeguinte.setOnClickListener(View.OnClickListener {
+    fun configuraPaginacao(lastItem: Boolean) {
+        if(lastItem){
             paginaAtual += 1
-            tvNumeroPagina.text = paginaAtual.toString()
             buscandoRepositorios()
-        })
+        }else{
+            paginaAtual = 1
+            buscandoRepositorios()
+        }
     }
 
     fun buscandoRepositorios() {
         viewModelScope.launch {
-            if (paginaAtual < 1) {
-                paginaAtual == 1
-            }
-            val resultado = searchRepositorioUseCase.fetchCurrencies(paginaAtual.toString())
-            _state.postValue(HomeState.ShowItems(resultado.toMutableList()))
+            repositoriosResponseList.addAll(searchRepositorioUseCase.fetchCurrencies(paginaAtual.toString()))
+            _state.postValue(HomeState.ShowItems(repositoriosResponseList))
         }
     }
 
