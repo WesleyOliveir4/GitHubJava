@@ -63,6 +63,8 @@ jacoco {
     reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
 }
 
+}
+
 
 dependencies {
 
